@@ -16,7 +16,7 @@ class Rig:
         self.__name = name
         self.__storage = []
 
-        # default resources — all rigs start with these strings
+        # default resources — all rigs start with two Data Spikes and one Removable Drive
         self.__storage.append("Data Spike")
         self.__storage.append("Data Spike")
         self.__storage.append("Removable Drive")

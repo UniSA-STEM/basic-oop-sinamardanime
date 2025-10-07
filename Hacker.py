@@ -1,5 +1,3 @@
-# Hacker.py
-# Represents a hacker with inventory, rig, encryption, upgrades, and trace tracking.
 
 from Rig import Rig
 from Asset import Asset, check_asset
@@ -83,6 +81,10 @@ class Hacker:
 
         # increase trace because this is a risky action
         self.__trace_level = self.__trace_level + 1
+
+        # notify when trace crosses the exposure threshold (new message)
+        if self.__trace_level > 5:
+            print(self.__name, "is now EXPOSED! Actions are blocked until trace is reduced.")
 
         # friendly readable message instead of True/False
         if target_rig.is_broken():
