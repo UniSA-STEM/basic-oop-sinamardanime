@@ -49,28 +49,27 @@ class Hacker:
 
     # Launch data spike attack
     def launch_data_spike(self, target_rig):
+        # Check if hacker even has a rig
         if self.__rig is None:
-            print(self.__name, "has no rig to attack.")
-            return
-        if not isinstance(target_rig, Rig):
-            print("Target is not a rig.")
-            return
-        if not self.__rig.consume_data_spike():
-            print(self.__name, "has no data spikes left.")
+            print(self.__name, "has no rig to launch data spikes.")
             return
 
+        # Check if there are any Data Spikes left in the rig's storage
+        if "Data Spike" not in self.__rig.get_storage():
+            print(self.__name, "has no Data Spikes available to launch.")
+            return
+
+        # Launch the attack (this increases the target rig's damage)
         target_rig.take_hit()
-        self.__trace_level = self.__trace_level + 1
-        print(self.__name, "launched Data Spike at", target_rig.get_name(), "Broken:", target_rig.is_broken())
 
+        # Every time a hacker launches a spike, trace level increases
+        self.__trace_level = self.__trace_level + 1
+
+        # Check the target rig condition
         if target_rig.is_broken():
-            if self.__rig.consume_removable_drive():
-                unsecured = target_rig.extract_unsecured_assets()
-                for asset in unsecured:
-                    self.__inventory.append(asset)
-                print(self.__name, "extracted", str(len(unsecured)), "unsecured assets from", target_rig.get_name())
-            else:
-                print(self.__name, "has no removable drive to extract assets.")
+            print(self.__name, "launched Data Spike at", target_rig.get_name(), "— Rig is now broken!")
+        else:
+            print(self.__name, "launched Data Spike at", target_rig.get_name(), "— Rig is still functional.")
 
     # Encrypt asset in inventory or rig storage
     def encrypt_asset(self, asset):

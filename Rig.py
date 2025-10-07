@@ -17,7 +17,14 @@ class Rig:
         self.__damage = 0                # how damaged it is
         self.__broken = False            # false = working, true = broken
         self.__upgrade_level = 0         # how many upgrades done
-        self.__storage_limit = 3         # how many assets it can hold
+        self.__storage_limit = 3
+
+
+
+        self.__storage.append("Data Spike")
+        self.__storage.append("Data Spike")
+        self.__storage.append("Removable Drive")
+        # how many assets it can hold
 
     # Add an asset to the rig’s storage
     def add_asset(self, asset):
