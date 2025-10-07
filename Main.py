@@ -95,7 +95,7 @@ def test_upgrade_and_storage():
     upgrade_hacker.store_asset(patch_notes)
     upgrade_hacker.retrieve_asset(patch_notes)
 
-
+k
 # ----------------------------------------------------------
 # Test 4 – Edge Cases
 # Tests situations like no rig, no token, and no security chip
