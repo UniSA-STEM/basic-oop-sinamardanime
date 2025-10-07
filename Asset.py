@@ -1,41 +1,38 @@
-"""
-File: Asset.py
-Description: <A brief description of this Python module.>
-Author: <full name>
-ID: <student_id>
-Username: <username>
-This is my own work as defined by the University's Academic Misconduct Policy.
-"""
-
-
+# Asset.py
+# Represents a digital asset with a name, description, and encryption flag.
+# Also provides check_asset(obj) helper to test whether an object is an Asset.
 
 class Asset:
     def __init__(self, name, description):
-        # Save basic info
+        # store asset info
         self.__name = name
         self.__description = description
-        # Assets start unencrypted
+        # start as unencrypted
         self.__encrypted = False
 
-    # Check if encrypted
-    def is_encrypted(self):
-        return self.__encrypted
-
-    # Encrypt asset (protect it)
+    # mark asset as encrypted
     def encrypt(self):
         self.__encrypted = True
 
-    # Decrypt asset (unprotect it)
+    # mark asset as decrypted
     def decrypt(self):
         self.__encrypted = False
 
-    # Get asset name
+    # return asset name (used for searching)
     def get_name(self):
         return self.__name
 
-    # How it prints in text form
+    # check encryption state
+    def is_encrypted(self):
+        return self.__encrypted
+
+    # readable string version of asset (important for printing)
     def __str__(self):
         if self.__encrypted:
             return self.__name + ": " + self.__description + " [Encrypted]"
         else:
             return self.__name + ": " + self.__description
+
+# Helper function: returns True if obj is an Asset instance
+def check_asset(obj):
+    return isinstance(obj, Asset)

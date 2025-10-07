@@ -8,43 +8,42 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
 
-# -------------------------------------
-# Import your three main classes
-# -------------------------------------
+# Main.py
+# Grouped tests covering battles, upgrades, encryption, trace, and edge cases.
+# No f-strings used; messages are simple and clear.
+
 from Asset import Asset
 from Rig import Rig
 from Hacker import Hacker
 
-
-# ----------------------------------------------------------
+# ------------------------------
 # Test 1 – Battle and Extraction
-# Simulates one hacker attacking another rig and extracting assets
-# ----------------------------------------------------------
+# ------------------------------
 def test_battle_and_extraction():
     print("\n--- Test 1: Battle and Extraction ---")
 
-    # Target rig setup
+    # Target rig setup (note: rigs start with two Data Spikes and one Removable Drive)
     target_rig = Rig("TargetRig")
 
     # Create two assets for the target rig
-    secret_doc = Asset("secret_doc", "top secret information")   # not encrypted
-    private_key = Asset("private_key", "encrypted key file")     # encrypted
-    private_key.encrypt()
+    secret_doc = Asset("secret_doc", "top secret information")
+    private_key = Asset("private_key", "encrypted key file")
+    private_key.encrypt()  # keep one encrypted so extraction skips it
 
     # Add assets to target rig
     target_rig.add_asset(secret_doc)
     target_rig.add_asset(private_key)
 
-    # Create an attacker hacker and assign them a rig
+    # Attacker setup
     attacker_rig = Rig("AttackerRig")
     attacker_hacker = Hacker("Attacker")
     attacker_hacker.assign_rig(attacker_rig)
 
-    # Attacker launches two data spikes (second breaks the target rig)
+    # Attack twice to break target (second hit breaks a level-0 rig)
     attacker_hacker.launch_data_spike(target_rig)
     attacker_hacker.launch_data_spike(target_rig)
 
-    # Show current inventory and target storage contents
+    # Print inventory and storage (one per line for readability)
     print("\nAttacker's Inventory:")
     for asset in attacker_hacker.get_inventory():
         print(" -", asset)
@@ -54,79 +53,70 @@ def test_battle_and_extraction():
         print(" -", asset)
 
 
-# ----------------------------------------------------------
-# Test 2 – Encryption and Decryption
-# Checks whether encryption and decryption work properly
-# ----------------------------------------------------------
+# --------------------------------
+# Test 2 – Encryption / Decryption
+# --------------------------------
 def test_encryption_and_decryption():
     print("\n--- Test 2: Encryption and Decryption ---")
 
-    # Create a hacker
     encryption_hacker = Hacker("Encryptor")
-
-    # Add an asset to their inventory
     log_file = Asset("log_file", "temporary logs")
     encryption_hacker.get_inventory().append(log_file)
 
-    # Encrypt and decrypt the asset
     encryption_hacker.encrypt_asset(log_file)
     encryption_hacker.decrypt_asset(log_file)
 
 
-# ----------------------------------------------------------
-# Test 3 – Upgrading and Storage
-# Verifies rig upgrades and asset storage/retrieval
-# ----------------------------------------------------------
+# --------------------------------
+# Test 3 – Upgrade and Storage
+# --------------------------------
 def test_upgrade_and_storage():
     print("\n--- Test 3: Upgrade and Storage ---")
 
-    # Create a hacker and a rig
     upgrade_hacker = Hacker("Upgrader")
     upgrade_rig = Rig("UpRig")
     upgrade_hacker.assign_rig(upgrade_rig)
 
-    # Give hacker a Hardware Patch to perform upgrade
+    # give a Hardware Patch and upgrade
     upgrade_hacker.get_inventory().append("Hardware Patch")
     upgrade_hacker.upgrade_rig()
 
-    # Create a new asset and store/retrieve it
+    # store and retrieve one asset
     patch_notes = Asset("patch_notes", "system update logs")
     upgrade_hacker.get_inventory().append(patch_notes)
     upgrade_hacker.store_asset(patch_notes)
     upgrade_hacker.retrieve_asset(patch_notes)
 
-k
-# ----------------------------------------------------------
+
+# --------------------------------
 # Test 4 – Edge Cases
-# Tests situations like no rig, no token, and no security chip
-# ----------------------------------------------------------
+# --------------------------------
 def test_edge_cases():
     print("\n--- Test 4: Edge Cases ---")
 
-    # Case 1: Try upgrading without a rig
+    # no rig upgrade attempt
     no_rig_hacker = Hacker("NoRigHacker")
-    no_rig_hacker.upgrade_rig()   # should print "has no rig to upgrade."
+    no_rig_hacker.upgrade_rig()
 
-    # Case 2: Try to acquire a rig without CryptoToken
+    # acquire rig without CryptoToken
     buyer_hacker = Hacker("BuyerHacker")
     cheap_rig = Rig("CheapRig")
     if "CryptoToken" in buyer_hacker.get_inventory():
-        buyer_hacker.get_inventory().remove("CryptoToken")  # remove token
-    buyer_hacker.acquire_rig(cheap_rig)  # should print missing token message
+        buyer_hacker.get_inventory().remove("CryptoToken")
+    buyer_hacker.acquire_rig(cheap_rig)
 
-    # Case 3: Try to encrypt without Security Chip
+    # encrypt without Security Chip
     no_chip_hacker = Hacker("NoChipHacker")
     test_file = Asset("test_file", "sensitive data")
     no_chip_hacker.get_inventory().append(test_file)
-    no_chip_hacker._Hacker__has_security_chip = False  # temporarily disable chip
-    no_chip_hacker.encrypt_asset(test_file)  # should print missing chip message
-    no_chip_hacker._Hacker__has_security_chip = True   # restore it
+    no_chip_hacker._Hacker__has_security_chip = False
+    no_chip_hacker.encrypt_asset(test_file)
+    no_chip_hacker._Hacker__has_security_chip = True
 
 
-# ----------------------------------------------------------
+# --------------------------------
 # Test 5 – Trace Management
-# Shows hacker trace increasing and being exposed
-# ----------------------------------------------------------
+# --------------------------------
 def test_trace_management():
     print("\n--- Test 5: Trace Management ---")
 
@@ -134,15 +124,15 @@ def test_trace_management():
     traced_rig = Rig("TraceRig")
     traced_hacker.assign_rig(traced_rig)
 
-    # Simulate risky actions that increase trace level
-    for i in range(6):  # exceed threshold (for example, 5)
+    # perform six risky actions and print trace level after each
+    for i in range(6):
         traced_hacker.launch_data_spike(traced_rig)
         print("Trace Level after action", i + 1, ":", traced_hacker.get_trace_level())
 
 
-# ----------------------------------------------------------
-# MAIN FUNCTION – runs all tests in order
-# ----------------------------------------------------------
+# ------------------------------
+# MAIN
+# ------------------------------
 def main():
     test_battle_and_extraction()
     test_encryption_and_decryption()
@@ -150,7 +140,5 @@ def main():
     test_edge_cases()
     test_trace_management()
 
-
-# Automatically run main if file is executed directly
 if __name__ == "__main__":
     main()
