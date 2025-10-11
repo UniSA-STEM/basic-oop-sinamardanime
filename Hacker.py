@@ -188,10 +188,19 @@ class Hacker:
         if self.__rig is None:
             print(self.__name, "has no rig to upgrade.")
             return
-        if "Hardware Patch" not in self.__inventory:
+
+        # Find a Hardware Patch Asset in inventory (search by name)
+        patch = None
+        for item in self.__inventory:
+            if check_asset(item) and item.get_name() == "Hardware Patch":
+                patch = item
+
+        if patch is None:
             print("No Hardware Patch found in inventory.")
             return
-        self.__inventory.remove("Hardware Patch")
+
+        # consume the patch and perform upgrade
+        self.__inventory.remove(patch)
         self.__rig.upgrade()
 
     # Store a specific asset from inventory into the assigned rig's storage

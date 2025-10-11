@@ -20,6 +20,8 @@ def test_battle_and_extraction():
     target_rig = Rig("TargetRig")
     attacker_rig = Rig("AttackerRig")
 
+    print("TargetRig condition / level:", target_rig.get_condition(), "/", target_rig.get_upgrade_level())
+
     # Create hackers
     attacker = Hacker("Attacker")
     attacker.assign_rig(attacker_rig)
@@ -36,14 +38,6 @@ def test_battle_and_extraction():
     attacker.launch_data_spike(target_rig)
     attacker.launch_data_spike(target_rig)
 
-    # Print final inventories and rig storage
-    print("\nAttacker's Inventory:")
-    for item in attacker.get_inventory():
-        print(" -", item)
-
-    print("\nTarget Rig Storage (remaining):")
-    for item in target_rig.get_storage():
-        print(" -", item)
 
 
 # -------------------------------------------------------
@@ -122,28 +116,56 @@ def test_edge_cases():
 # TEST 5 – Trace Management
 # -------------------------------------------------------
 def test_trace_management():
-    print("\n--- TEST 5: Trace Management ---")
+    print("\n--- TEST 5: Trace Management (more upgrades) ---")
 
     hacker = Hacker("Tracer")
     rig = Rig("TraceRig")
     hacker.assign_rig(rig)
 
-    # Add more Data Spikes so we can do >5 attacks
-    for _ in range(8):
-        rig.add_asset(Asset("Data Spike", "Used in battles."))
+    # Give multiple Hardware Patch assets and upgrade multiple times
+    hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
+    hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
+    hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
+    hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
 
-    # Perform multiple attacks
+    # Perform upgrades (consumes the patches)
+    hacker.upgrade_rig()
+    hacker.upgrade_rig()
+    hacker.upgrade_rig()
+    hacker.upgrade_rig()
+
+    # Attempt to add many Data Spikes to the rig; count how many actually succeed
+    added = 0
+    attempts = 40
+    for _ in range(attempts):
+        ok = rig.add_asset(Asset("Data Spike", "Used in battles."))
+        if ok:
+            added = added + 1
+
+    print("Attempted to add", attempts, "Data Spikes; actually added", added)
+
+    # Count spikes in storage (no sum())
+    spikes = 0
+    for item in rig.get_storage():
+        if hasattr(item, "get_name") and item.get_name() == "Data Spike":
+            spikes = spikes + 1
+    print("Data Spikes available on rig before attacks:", spikes)
+
+    # Launch up to 6 attacks (will increase trace when spikes consumed)
     for i in range(6):
         hacker.launch_data_spike(rig)
         print("Trace Level after action", i + 1, ":", hacker.get_trace_level())
 
-    # Try encrypting while exposed
+    # Try encrypting while exposed (should be blocked when trace > 5)
     file1 = Asset("TraceFile", "log data")
     hacker.get_inventory().append(file1)
+    print("\nTrying to encrypt asset while EXPOSED:")
     hacker.encrypt_asset(file1)
 
     # Reduce trace and try again
-    hacker.reduce_trace(6)
+    print("\nReducing trace...")
+    hacker.reduce_trace(20)
+    print("\nTrying again after reducing trace:")
     hacker.encrypt_asset(file1)
 
 

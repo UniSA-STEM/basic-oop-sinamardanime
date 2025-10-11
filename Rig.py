@@ -26,6 +26,7 @@ class Rig:
 
     # Add an asset or resource if there’s room
     def add_asset(self, asset):
+        # returns True if added, False if storage full
         if len(self.__storage) >= self.__storage_limit:
             print("Cannot add asset; storage full for rig", self.__name)
             return False
