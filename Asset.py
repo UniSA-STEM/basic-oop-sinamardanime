@@ -39,7 +39,9 @@ class Asset:
     def is_encrypted(self):
         return self.__encrypted
 
-    # readable string version of asset (important for printing)
+    # Description: Returns a human-readable string showing the asset’s name, description, and encryption status.
+    # Parameters:  None
+    # Returns: A string string (A formatted string representing the asset).
     def __str__(self):
         if self.__encrypted:
             return self.__name + ": " + self.__description + " [Encrypted]"
