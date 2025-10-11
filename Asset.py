@@ -2,19 +2,26 @@
 # Represents a digital asset with a name, description, and encryption flag.
 # Also provides check_asset(obj) helper to test whether an object is an Asset.
 
+
+
+# Description: Defines the Asset class, representing a digital asset
+# that can be encrypted or decrypted, with a name and description.
+# Also includes a helper function to verify whether an object is an Asset instance.
 class Asset:
     def __init__(self, name, description):
         # store asset info
         self.__name = name
         self.__description = description
-        # start as unencrypted
         self.__encrypted = False
 
-    # mark asset as encrypted
+    # Description: Marks this asset as encrypted.
+    # Encrypted assets are protected and cannot be transferred or extracted until decrypted.
+    # Parameters:  None
+    # Returns:     None
     def encrypt(self):
         self.__encrypted = True
 
-    # mark asset as decrypted
+
     def decrypt(self):
         self.__encrypted = False
 
