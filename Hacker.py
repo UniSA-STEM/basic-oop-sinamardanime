@@ -1,6 +1,14 @@
 from Rig import Rig
+#   check_asset checks whether the provided object is an instance of the Asset class. Used throughout the program to
+#   safely confirm that an object is a valid Asset type.
+
 from Asset import Asset, check_asset
 
+
+# Description:
+# Initialises a new Hacker object with a name, starting inventory (1 CryptoToken), and some basic attributes.
+# Parameters: name – The hacker’s display name or alias.
+# Returns: None
 class Hacker:
     def __init__(self, name):
         self.__name = name
@@ -9,7 +17,7 @@ class Hacker:
         self.__has_security_chip = True
         self.__trace_level = 0
 
-    # Accessors
+
     def get_inventory(self):
         return self.__inventory
 
@@ -29,9 +37,9 @@ class Hacker:
             self.__trace_level = 0
         print(self.__name, "reduced trace to", str(self.__trace_level))
 
-    # Acquire a rig using a CryptoToken
+
     def acquire_rig(self, rig):
-        # Validate that the argument is a Rig instance
+
         if not isinstance(rig, Rig):
             print("Acquired rig must be a Rig instance.")
             return

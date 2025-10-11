@@ -48,6 +48,9 @@ class Asset:
         else:
             return self.__name + ": " + self.__description
 
-# Helper function: returns True if obj is an Asset instance
+# Description: Helper function that checks if an object is an instance
+# of the Asset class. Used throughout the program to safely identify valid asset objects.
+# Parameters: obj – The object to test.
+# Returns: a boolean: True if obj is an Asset and False if otherwise.
 def check_asset(obj):
     return isinstance(obj, Asset)
