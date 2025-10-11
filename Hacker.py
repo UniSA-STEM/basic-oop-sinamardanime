@@ -1,11 +1,10 @@
-
 from Rig import Rig
 from Asset import Asset, check_asset
 
 class Hacker:
     def __init__(self, name):
         self.__name = name
-        self.__inventory = ["CryptoToken"]
+        self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]
         self.__rig = None
         self.__has_security_chip = True
         self.__trace_level = 0
@@ -32,13 +31,24 @@ class Hacker:
 
     # Acquire a rig using a CryptoToken
     def acquire_rig(self, rig):
+        # Validate that the argument is a Rig instance
         if not isinstance(rig, Rig):
             print("Acquired rig must be a Rig instance.")
             return
-        if "CryptoToken" not in self.__inventory:
+
+        # Find the CryptoToken in inventory (no break)
+        token = None
+        for item in self.__inventory:
+            if check_asset(item) and item.get_name() == "CryptoToken":
+                token = item
+
+        # If no token was found
+        if token is None:
             print(self.__name, "does not have a CryptoToken to acquire a rig.")
             return
-        self.__inventory.remove("CryptoToken")
+
+        # Spend the token and assign the rig
+        self.__inventory.remove(token)
         self.__rig = rig
         print("Rig '" + rig.get_name() + "' has been activated by hacker " + self.__name + ".")
 
@@ -53,10 +63,17 @@ class Hacker:
         if self.__rig is None:
             print(self.__name, "has no rig to repair.")
             return
-        if "CryptoToken" not in self.__inventory:
+
+        token = None
+        for item in self.__inventory:
+            if check_asset(item) and item.get_name() == "CryptoToken":
+                token = item
+
+        if token is None:
             print(self.__name, "has no CryptoToken to repair the rig.")
             return
-        self.__inventory.remove("CryptoToken")
+
+        self.__inventory.remove(token)
         self.__rig.repair()
 
     # Launch a Data Spike at another rig
@@ -103,6 +120,7 @@ class Hacker:
                 print(self.__name, "has no removable drive to extract assets from", target_rig.get_name())
 
     # Encrypt an asset in inventory or rig storage
+    # Encrypt an asset in inventory or rig storage
     def encrypt_asset(self, asset):
         if self.is_exposed():
             print(self.__name, "is exposed and cannot encrypt assets right now.")
@@ -110,16 +128,27 @@ class Hacker:
         if not self.__has_security_chip:
             print(self.__name, "has no Security Chip to encrypt.")
             return
-        # use check_asset to detect Asset objects
-        if check_asset(asset) and asset in self.__inventory:
-            asset.encrypt()
-            print("Encrypted asset:", asset.get_name())
-            return
-        if self.__rig is not None and check_asset(asset) and asset in self.__rig.get_storage():
-            asset.encrypt()
-            print("Encrypted asset in rig storage:", asset.get_name())
-            return
-        print("Asset not found in inventory or rig storage; cannot encrypt.")
+
+        found = False  # Track if we found the asset
+
+        # Search inventory by name
+        for item in self.__inventory:
+            if check_asset(item) and item.get_name() == asset.get_name():
+                item.encrypt()
+                print("Encrypted asset:", item.get_name())
+                found = True
+
+        # Search rig storage if hacker has a rig
+        if self.__rig is not None:
+            for item in self.__rig.get_storage():
+                if check_asset(item) and item.get_name() == asset.get_name():
+                    item.encrypt()
+                    print("Encrypted asset in rig storage:", item.get_name())
+                    found = True
+
+        # If not found anywhere, print message
+        if not found:
+            print("Asset not found in inventory or rig storage; cannot encrypt.")
 
     # Decrypt an asset in inventory or rig storage
     def decrypt_asset(self, asset):
@@ -129,15 +158,27 @@ class Hacker:
         if not self.__has_security_chip:
             print(self.__name, "has no Security Chip to decrypt.")
             return
-        if check_asset(asset) and asset in self.__inventory:
-            asset.decrypt()
-            print("Decrypted asset:", asset.get_name())
-            return
-        if self.__rig is not None and check_asset(asset) and asset in self.__rig.get_storage():
-            asset.decrypt()
-            print("Decrypted asset in rig storage:", asset.get_name())
-            return
-        print("Asset not found in inventory or rig storage; cannot decrypt.")
+
+        found = False  # Track if we found the asset
+
+        # Search inventory by name
+        for item in self.__inventory:
+            if check_asset(item) and item.get_name() == asset.get_name():
+                item.decrypt()
+                print("Decrypted asset:", item.get_name())
+                found = True
+
+        # Search rig storage if hacker has a rig
+        if self.__rig is not None:
+            for item in self.__rig.get_storage():
+                if check_asset(item) and item.get_name() == asset.get_name():
+                    item.decrypt()
+                    print("Decrypted asset in rig storage:", item.get_name())
+                    found = True
+
+        # If not found anywhere, print message
+        if not found:
+            print("Asset not found in inventory or rig storage; cannot decrypt.")
 
     # Upgrade the assigned rig using a "Hardware Patch" string in inventory
     def upgrade_rig(self):
@@ -164,8 +205,12 @@ class Hacker:
         if asset not in self.__inventory:
             print("Asset not found in inventory.")
             return
-        self.__rig.add_asset(asset)
-        if asset in self.__rig.get_storage():
+        # Block transferring encrypted assets
+        if check_asset(asset) and asset.is_encrypted():
+            print("Cannot store encrypted asset until it is decrypted:", asset.get_name())
+            return
+        # Try to add to rig
+        if self.__rig.add_asset(asset):
             self.__inventory.remove(asset)
             print("Stored asset", asset.get_name(), "into rig storage.")
 

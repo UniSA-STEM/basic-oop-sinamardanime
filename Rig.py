@@ -13,34 +13,31 @@ from Asset import Asset, check_asset
 
 class Rig:
     def __init__(self, name):
-        self.__name = name
-        self.__storage = []
-
-        # default resources — all rigs start with two Data Spikes and one Removable Drive
-        self.__storage.append("Data Spike")
-        self.__storage.append("Data Spike")
-        self.__storage.append("Removable Drive")
-
-        # damage and condition tracking
-        self.__damage = 0
-        self.__broken = False
-
-        # level affects toughness and storage
-        self.__upgrade_level = 0
-        self.__storage_limit = 5
+            self.__name = name
+            self.__storage = [
+                Asset("Data Spike", "Used in battles."),
+                Asset("Data Spike", "Used in battles."),
+                Asset("Removable Drive", "Used for extraction.")
+            ]
+            self.__damage = 0
+            self.__broken = False
+            self.__upgrade_level = 0
+            self.__storage_limit = 5
 
     # Add an asset or resource if there’s room
     def add_asset(self, asset):
         if len(self.__storage) >= self.__storage_limit:
             print("Cannot add asset; storage full for rig", self.__name)
-            return
+            return False
         self.__storage.append(asset)
+        return True
 
     # Remove a Data Spike (used in attacks)
     def consume_data_spike(self):
-        if "Data Spike" in self.__storage:
-            self.__storage.remove("Data Spike")
-            return True
+        for item in self.__storage:
+            if check_asset(item) and item.get_name() == "Data Spike":
+                self.__storage.remove(item)
+                return True
         return False
 
     # Apply one hit of damage (can break if threshold reached)
@@ -56,9 +53,10 @@ class Rig:
 
     # Remove a Removable Drive when extracting
     def consume_removable_drive(self):
-        if "Removable Drive" in self.__storage:
-            self.__storage.remove("Removable Drive")
-            return True
+        for item in self.__storage:
+            if check_asset(item) and item.get_name() == "Removable Drive":
+                self.__storage.remove(item)
+                return True
         return False
 
     # Extract unencrypted Asset objects from rig
