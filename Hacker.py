@@ -83,14 +83,17 @@ class Hacker:
         self.__rig = rig
         print("Rig '" + rig.get_name() + "' has been activated by hacker " + self.__name + ".")
 
-
-
+    # Description: Directly assigns a rig to the hacker without spending a CryptoToken.
+    # Parameters: rig – The Rig object to be assigned to the hacker.
+    # Returns: None
     def assign_rig(self, rig):
+        # verifies that the provided object is a Rig
         if isinstance(rig, Rig):
             self.__rig = rig
+            # prints a confirmation message showing who received which rig
             print(self.__name, "assigned rig", rig.get_name())
 
-    # Repair the assigned rig using a CryptoToken
+
     def repair_rig(self):
         if self.__rig is None:
             print(self.__name, "has no rig to repair.")

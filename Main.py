@@ -38,6 +38,9 @@ def test_battle_and_extraction():
     attacker.launch_data_spike(target_rig)
     attacker.launch_data_spike(target_rig)
 
+    print("\n--- Hacker Summary ---")
+    print(attacker)
+
 
 
 # -------------------------------------------------------
