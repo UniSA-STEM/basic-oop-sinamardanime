@@ -85,6 +85,12 @@ class Rig:
 
     # Repair rig (reset damage and broken state)
     def repair(self):
+        # checks if the rig actually needs repair
+        if self.__damage == 0 and not self.__broken:
+            print(self.__name, "is already in pristine condition. No repair needed.")
+            return
+
+        # perform the repair if damaged
         self.__damage = 0
         self.__broken = False
         print(self.__name, "has been repaired to pristine state.")

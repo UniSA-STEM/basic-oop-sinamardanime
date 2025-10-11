@@ -90,14 +90,14 @@ def test_upgrade_and_storage():
 def test_edge_cases():
     print("\n--- TEST 4: Edge Cases ---")
 
-    # Try to upgrade without a rig
+    # Try to upgrade without a rig (should fail gracefully)
     hacker_no_rig = Hacker("NoRigHacker")
     hacker_no_rig.upgrade_rig()
 
     # Try to acquire rig without a CryptoToken
     hacker_no_token = Hacker("BuyerHacker")
     rig = Rig("CheapRig")
-    # Remove CryptoToken from inventory
+    # Remove CryptoToken from inventory to simulate resource shortage
     token = None
     for item in hacker_no_token.get_inventory():
         if item.get_name() == "CryptoToken":
@@ -106,29 +106,32 @@ def test_edge_cases():
         hacker_no_token.get_inventory().remove(token)
     hacker_no_token.acquire_rig(rig)
 
-    # Try to repair a rig when you have none
+    # Try to repair a rig when none is assigned (should print a warning)
     hacker_no_repair = Hacker("RepairHacker")
     hacker_no_repair.repair_rig()
 
-    # Try to repair a rig but remove the CryptoToken first
-    # Try to repair a rig that has damage
+    # Assign a rig and simulate damage
     rig2 = Rig("BrokenRig")
     hacker_no_repair.assign_rig(rig2)
-
-    # Simulate damage by launching two hits (enough to break it)
     rig2.take_hit()
-    rig2.take_hit()
+    rig2.take_hit()  # enough to break the rig
 
-    # Repair the rig using the CryptoToken (now this will succeed)
+    # Repair the damaged rig using a CryptoToken (success case)
     hacker_no_repair.repair_rig()
 
-    # Try to encrypt without Security Chip
+    # Try to repair again when the rig is already pristine (should print "No repair needed")
+    hacker_no_repair.repair_rig()
+
+    # Try to encrypt without a Security Chip (should be blocked)
     hacker_no_chip = Hacker("NoChipHacker")
     hacker_no_chip._Hacker__has_security_chip = False
     test_asset = Asset("SensitiveFile", "Classified info")
     hacker_no_chip.get_inventory().append(test_asset)
     hacker_no_chip.encrypt_asset(test_asset)
     hacker_no_chip._Hacker__has_security_chip = True
+
+
+
 
 # -------------------------------------------------------
 # TEST 5 – Trace Management
