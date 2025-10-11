@@ -135,7 +135,7 @@ class Hacker:
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == asset.get_name():
                 item.encrypt()
-                print("Encrypted asset:", item.get_name())
+                print("Encrypted asset:", str(item))
                 found = True
 
         # Search rig storage if hacker has a rig
@@ -165,7 +165,7 @@ class Hacker:
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == asset.get_name():
                 item.decrypt()
-                print("Decrypted asset:", item.get_name())
+                print("Decrypted asset:", str(item))
                 found = True
 
         # Search rig storage if hacker has a rig
