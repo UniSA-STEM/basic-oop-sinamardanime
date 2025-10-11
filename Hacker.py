@@ -1,6 +1,6 @@
 from Rig import Rig
-#   check_asset checks whether the provided object is an instance of the Asset class. Used throughout the program to
-#   safely confirm that an object is a valid Asset type.
+# check_asset checks whether the provided object is an instance of the Asset class. Used throughout the program to
+# safely confirm that an object is a valid Asset type.
 
 from Asset import Asset, check_asset
 
@@ -18,9 +18,15 @@ class Hacker:
         self.__trace_level = 0
 
 
+    # Description: Returns the list of assets currently in the hacker's inventory.
+    # Parameters: None
+    # Returns: The hacker’s inventory list containing Asset objects.
     def get_inventory(self):
         return self.__inventory
 
+    # Description:  Returns the Rig object currently assigned to the hacker.
+    # Parameters: None
+    # Returns: The hacker’s assigned Rig, or None if no rig is set.
     def get_rig(self):
         return self.__rig
 
