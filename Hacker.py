@@ -62,22 +62,26 @@ class Hacker:
         if not isinstance(rig, Rig):
             print("Acquired rig must be a Rig instance.")
             return
+
         # looks for a CryptoToken in the hacker's inventory as tokens are required as the "currency" for rig acquisition
         token = None
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "CryptoToken":
                 token = item
 
-
+        # stops here if no CryptoToken is found
+        # this makes it fair by preventing free rig activation
         if token is None:
             print(self.__name, "does not have a CryptoToken to acquire a rig.")
             return
 
-
+        # remove the CryptoToken from inventory to simulate spending it
+        # without this step, the hacker could reuse the same token indefinitely
         self.__inventory.remove(token)
+
+        # assigns the rig to the hacker and displays confirmation message
         self.__rig = rig
         print("Rig '" + rig.get_name() + "' has been activated by hacker " + self.__name + ".")
-
 
 
 
