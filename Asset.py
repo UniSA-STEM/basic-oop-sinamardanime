@@ -21,15 +21,21 @@ class Asset:
     def encrypt(self):
         self.__encrypted = True
 
-
+    # Description: Marks the asset as decrypted (unencrypted).
+    # Parameters:  None
+    # Returns:     None
     def decrypt(self):
         self.__encrypted = False
 
-    # return asset name (used for searching)
+    # Description: Returns the asset’s name.
+    # Parameters:  None
+    # Returns: str – The name of the asset.
     def get_name(self):
         return self.__name
 
-    # check encryption state
+    # Description: Checks whether the asset is currently encrypted.
+    # Parameters:  None
+    # Returns: a boolean: True if encrypted and False if otherwise.
     def is_encrypted(self):
         return self.__encrypted
 
