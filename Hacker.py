@@ -93,12 +93,17 @@ class Hacker:
             # prints a confirmation message showing who received which rig
             print(self.__name, "assigned rig", rig.get_name())
 
-
+    # Description: Repairs the hacker’s rig using a CryptoToken from inventory.
+    # Ensures the hacker has a rig assigned and owns a CryptoToken before performing the repair.
+    # This function also Prevents free or invalid repairs by checking conditions first.
+    # Parameters: None
+    # Returns: None
     def repair_rig(self):
+        # checks if the hacker currently has a rig
         if self.__rig is None:
             print(self.__name, "has no rig to repair.")
             return
-
+        # searches the hacker’s inventory for a CryptoToken
         token = None
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "CryptoToken":
@@ -108,8 +113,11 @@ class Hacker:
             print(self.__name, "has no CryptoToken to repair the rig.")
             return
 
+        # remove the CryptoToken from inventory to simulate it being spent
         self.__inventory.remove(token)
         self.__rig.repair()
+
+
 
     # Launch a Data Spike at another rig
     def launch_data_spike(self, target_rig):

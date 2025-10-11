@@ -106,14 +106,29 @@ def test_edge_cases():
         hacker_no_token.get_inventory().remove(token)
     hacker_no_token.acquire_rig(rig)
 
+    # Try to repair a rig when you have none
+    hacker_no_repair = Hacker("RepairHacker")
+    hacker_no_repair.repair_rig()
+
+    # Try to repair a rig but remove the CryptoToken first
+    # Try to repair a rig that has damage
+    rig2 = Rig("BrokenRig")
+    hacker_no_repair.assign_rig(rig2)
+
+    # Simulate damage by launching two hits (enough to break it)
+    rig2.take_hit()
+    rig2.take_hit()
+
+    # Repair the rig using the CryptoToken (now this will succeed)
+    hacker_no_repair.repair_rig()
+
     # Try to encrypt without Security Chip
     hacker_no_chip = Hacker("NoChipHacker")
-    hacker_no_chip._Hacker__has_security_chip = False  # force off
+    hacker_no_chip._Hacker__has_security_chip = False
     test_asset = Asset("SensitiveFile", "Classified info")
     hacker_no_chip.get_inventory().append(test_asset)
     hacker_no_chip.encrypt_asset(test_asset)
     hacker_no_chip._Hacker__has_security_chip = True
-
 
 # -------------------------------------------------------
 # TEST 5 – Trace Management
