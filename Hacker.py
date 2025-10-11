@@ -30,43 +30,57 @@ class Hacker:
     def get_rig(self):
         return self.__rig
 
+    # Description: Returns the hacker’s current trace level.
+    # Parameters: None
+    # Returns: An integer value representing the hacker’s trace level.
     def get_trace_level(self):
         return self.__trace_level
 
-    # Trace helpers
+    # Description: Checks whether the hacker is exposed.
+    #  A hacker becomes exposed when their trace level exceeds 5.
+    # Parameters: None
+    # Returns: True if the hacker’s trace level is greater than 5, otherwise False.
     def is_exposed(self):
         return self.__trace_level > 5
 
+    # Description: Reduces the hacker’s trace level by a specific amount.
+    # Trace cannot go below 0.
+    # Parameters: amount is the number by which to reduce the trace level.
+    # Returns: None
     def reduce_trace(self, amount):
         self.__trace_level = self.__trace_level - amount
         if self.__trace_level < 0:
             self.__trace_level = 0
         print(self.__name, "reduced trace to", str(self.__trace_level))
 
-
+    # Description: Lets the hacker buy and activate a rig using a CryptoToken.
+    # Validates the rig, checks for a token in inventory, removes it, and assigns the rig to the hacker.
+    # Parameters: rig – The Rig object the hacker wants to acquire.
+    # Returns: None
     def acquire_rig(self, rig):
-
+        # ensures the given object is a Rig instance and prevents invalid data types or accidental misuse
         if not isinstance(rig, Rig):
             print("Acquired rig must be a Rig instance.")
             return
-
-        # Find the CryptoToken in inventory (no break)
+        # looks for a CryptoToken in the hacker's inventory as tokens are required as the "currency" for rig acquisition
         token = None
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "CryptoToken":
                 token = item
 
-        # If no token was found
+
         if token is None:
             print(self.__name, "does not have a CryptoToken to acquire a rig.")
             return
 
-        # Spend the token and assign the rig
+
         self.__inventory.remove(token)
         self.__rig = rig
         print("Rig '" + rig.get_name() + "' has been activated by hacker " + self.__name + ".")
 
-    # Assign rig without spending token (useful for testing)
+
+
+
     def assign_rig(self, rig):
         if isinstance(rig, Rig):
             self.__rig = rig
