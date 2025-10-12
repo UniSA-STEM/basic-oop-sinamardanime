@@ -96,22 +96,31 @@ def test_encryption_and_decryption():
 def test_upgrade_and_storage():
     print("\n--- TEST 3: Rig Upgrade and Storage ---")
 
+    # Created a hacker and rig, then assigned the rig to the hacker
     hacker = Hacker("Upgrader")
     rig = Rig("UpRig")
     hacker.assign_rig(rig)
 
-    # Give hacker a Hardware Patch asset
+    # Gave the hacker a Hardware Patch asset that is used to upgrade the rig
     hardware_patch = Asset("Hardware Patch", "Used to upgrade rigs.")
     hacker.get_inventory().append(hardware_patch)
 
-    # Upgrade rig
+    # Shows rig condition and storage before upgrade
     hacker.upgrade_rig()
 
-    # Add new asset and test storing/retrieving
+    # Created a new asset and test storing it into the rig and retrieving it back
     patch_notes = Asset("PatchNotes", "System update log")
     hacker.get_inventory().append(patch_notes)
+
+    # Stored the asset into the rig which will remove from inventory if successful
     hacker.store_asset(patch_notes)
+    print("Rig storage after storing PatchNotes:", [str(i) for i in rig.get_storage()])
+    print("Hacker inventory after storing PatchNotes:", [str(i) for i in hacker.get_inventory()])
+
+    # Retrieve the asset back from the rig into inventory
     hacker.retrieve_asset(patch_notes)
+    print("Rig storage after retrieving PatchNotes:", [str(i) for i in rig.get_storage()])
+    print("Hacker inventory after retrieving PatchNotes:", [str(i) for i in hacker.get_inventory()])
 
 
 # -------------------------------------------------------
