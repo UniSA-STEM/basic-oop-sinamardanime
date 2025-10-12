@@ -227,49 +227,57 @@ def test_trace_management():
 
     print("Attempted to add", attempts, "Data Spikes; actually added", added)
 
-
     # Count how many Data Spikes are currently stored in the rig
-    # Loops through each item in rig storage and checks if its name matches "Data Spike"
+    # Loops through each item in rig storage and checks if it's an Asset named "Data Spike"
     spikes = 0
     for item in rig.get_storage():
-        if check_asset(item) and item.get_name() == "Data Spike":
+        if isinstance(item, Asset) and item.get_name() == "Data Spike":
             spikes = spikes + 1
     print("Data Spikes available on rig before attacks:", spikes)
 
-    # Launch up to 6 attacks (will increase trace when spikes consumed)
+    # Launch up to 6 attacks. Each launch consumes a Data Spike from the attacker's rig if they are available
+    # and increases the hacker's trace level. I printed the trace after each action to observe the hackers' exposure.
     for i in range(6):
         hacker.launch_data_spike(rig)
         print("Trace Level after action", i + 1, ":", hacker.get_trace_level())
 
-    # Try encrypting while exposed (should be blocked when trace > 5)
+    # Tries encrypting an asset while the hacker may be exposed.
+    # Encryption is blocked if trace > exposure threshold or Security Chip missing.
     file1 = Asset("TraceFile", "log data")
     hacker.get_inventory().append(file1)
     print("\nTrying to encrypt asset while EXPOSED:")
     hacker.encrypt_asset(file1)
 
-    # Reduce trace and try again
+    # Reduces trace significantly to simulate cooldown and tries encryption again.
     print("\nReducing trace...")
     hacker.reduce_trace(20)
     print("\nTrying again after reducing trace:")
     hacker.encrypt_asset(file1)
+    # Attempt another attack which shows the behavior when attempting risky actions after trace changes.
     print("\nAttempting another attack while EXPOSED:")
     hacker.launch_data_spike(rig)
 
-# -------------------------------------------------------
-# MAIN DRIVER
-# -------------------------------------------------------
+
+
+# Description: Runs all test functions in sequence to demonstrate and verify full system behaviour.
+# Parameters: None.
+# Returns: None. Executes all test cases and prints their results.
 def main():
+    # Runs test for attacking, breaking rigs, and extracting assets
     test_battle_and_extraction()
+
+    # Runs test for asset encryption and decryption process
     test_encryption_and_decryption()
+
+    # Run test for rig upgrading, storing, and retrieving assets
     test_upgrade_and_storage()
+
+
+    # Run test for edge cases such as missing rigs, tokens, and chips
     test_edge_cases()
+
+    # Run test for trace level management, upgrades, and exposure logic
     test_trace_management()
-
-
-
-
-
-
 
 
 
