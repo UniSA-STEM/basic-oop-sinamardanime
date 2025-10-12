@@ -280,6 +280,7 @@ def main():
     test_trace_management()
 
 
+# Description: Ensures that all tests run only when this script is executed directly.
 
 if __name__ == "__main__":
     main()
