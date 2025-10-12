@@ -127,20 +127,33 @@ class Rig:
         else:
             print(self.__name, "storage full; cannot generate asset.")
 
-    # Accessors
+    # Description: Returns the name of the rig.
+    # Parameters: None.
+    # Returns: String containing the rig’s name.
     def get_name(self):
         return self.__name
 
+    # Description: Provides access to the list of items currently stored in the rig.
+    # Parameters: None.
+    # Returns: A list containing all assets and resources stored in the rig.
     def get_storage(self):
         return self.__storage
 
+    # Description: Retrieves the current upgrade level of the rig.
+    # Parameters: None.
+    # Returns: Integer representing the rig’s upgrade level.
     def get_upgrade_level(self):
         return self.__upgrade_level
 
-    # Return condition in requested format
+    # Description: Returns the rig’s condition (Broken or Pristine) along with its upgrade level.
+    # Parameters: None.
+    # Returns: String describing the rig’s condition and current upgrade level.
     def get_condition(self):
         condition = "Broken" if self.__broken else "Pristine"
         return condition + " (Level " + str(self.__upgrade_level) + ")"
 
+    # Description: Returns a readable string summary of the rig, including its name, condition, and number of stored items.
+    # Parameters: None.
+    # Returns: Formatted string summarizing the rig’s status and storage count.
     def __str__(self):
         return self.__name + " - " + self.get_condition() + " - Stored: " + str(len(self.__storage))
