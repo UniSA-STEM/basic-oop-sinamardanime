@@ -261,23 +261,26 @@ def test_trace_management():
 # TEST 6: Rig Condition Changes
 # -----------------------------------------
 
-
+# Description: Tests how a rig’s condition changes through taking damage, repairing, and upgrading.
+# Parameters: None. Creates its own Rig object and runs actions on it.
+# Returns: None. Prints output showing automatic state changes.
 def test_rig_condition_changes():
-    print("\n--- TEST 6: Rig Condition Changes ---")
+    print("\n--- TEST 6: Rig upgrade and damage for a level 0 rig---")
 
+    # Create a new rig named "ConditionRig" whcih starts undamaged and pristine
     rig = Rig("ConditionRig")
     print("Initial condition:", rig.get_condition())
 
-    # Damage test
-    rig.take_hit()
-    rig.take_hit()
+    # Damage test of 2 hits
+    rig.take_hit() # first hit adds 1 damage and rig is still functional
+    rig.take_hit()  # second hit reaches threshold and breaks the rig as it is level 0
     print("After 2 hits:", rig.get_condition())
 
-    # Repair test
+    # repair the rig to reset damage and broken state
     rig.repair()
     print("After repair:", rig.get_condition())
 
-    # Upgrade test
+    # increase rig’s upgrade level and capacity
     rig.upgrade()
     print("After upgrade:", rig.get_condition())
 
