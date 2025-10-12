@@ -284,17 +284,18 @@ class Hacker:
             print("Cannot store encrypted asset until it is decrypted:", asset.get_name())
             return
 
-        # Removes the asset from inventory once successfully stored
+        # Attempts to add the asset to the rig’s storage
         if self.__rig.add_asset(asset):
+            # Removes the asset from inventory once successfully stored
             self.__inventory.remove(asset)
             print("Stored asset", asset.get_name(), "into rig storage.")
 
-
-
-
-
-    # Store all Asset objects from inventory into the rig (respects rig capacity)
+    # Description: Stores all asset objects from the hacker’s inventory into the assigned rig’s storage,
+    # while also respecting the rig’s capacity limits.
+    # Parameters: None. Automatically checks all items in the hacker’s inventory.
+    # Returns: None. Prints messages for each asset stored or skipped.
     def store_all_assets(self):
+        # Stops if the hacker has no rig assigned
         if self.__rig is None:
             print(self.__name, "has no rig to store assets.")
             return
@@ -302,17 +303,23 @@ class Hacker:
             if check_asset(item):
                 self.store_asset(item)
 
-    # Retrieve a specific asset from rig storage back into inventory
+    # Description: Retrieves a specific asset from the rig’s storage and moves it back into the hacker’s inventory.
+    # Parameters: asset – the asset object to retrieve that must exist in the rig’s storage.
+    # Returns: None. Prints messages describing success or failure of the retrieval process.
     def retrieve_asset(self, asset):
+        # Blocks retrieval if the hacker is currently exposed
         if self.is_exposed():
             print(self.__name, "is exposed and cannot retrieve assets right now.")
             return
+        # Stops if the hacker has no rig assigned
         if self.__rig is None:
             print(self.__name, "has no rig to retrieve assets from.")
             return
+        # Ensure the asset exists in the rig’s storage before retrieving
         if asset not in self.__rig.get_storage():
             print("Asset not found in rig storage.")
             return
+        # Moves the asset from rig storage back into the hacker’s inventory
         self.__inventory.append(asset)
         self.__rig.get_storage().remove(asset)
         print("Retrieved asset", asset.get_name(), "from rig storage.")
@@ -325,6 +332,8 @@ class Hacker:
         for item in list(self.__rig.get_storage()):
             if check_asset(item) and not item.is_encrypted():
                 self.retrieve_asset(item)
+
+
 
     # Scan inventory for an asset by name, remove and return it if found
     def scan_inventory(self, asset_name):
