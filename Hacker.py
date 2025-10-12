@@ -108,7 +108,7 @@ class Hacker:
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "CryptoToken":
                 token = item
-
+        # Checks if the hacker has a CryptoToken before performing a repair.
         if token is None:
             print(self.__name, "has no CryptoToken to repair the rig.")
             return

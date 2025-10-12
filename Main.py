@@ -94,19 +94,21 @@ def test_edge_cases():
     hacker_no_rig = Hacker("NoRigHacker")
     hacker_no_rig.upgrade_rig()
 
-    # Try to acquire rig without a CryptoToken
+    # Try to acquire a rig without a CryptoToken
     hacker_no_token = Hacker("BuyerHacker")
     rig = Rig("CheapRig")
-    # Remove CryptoToken from inventory to simulate resource shortage
+
+    # Remove the CryptoToken from inventory to simulate shortage
     token = None
     for item in hacker_no_token.get_inventory():
         if item.get_name() == "CryptoToken":
             token = item
     if token:
         hacker_no_token.get_inventory().remove(token)
+
     hacker_no_token.acquire_rig(rig)
 
-    # Try to repair a rig when none is assigned (should print a warning)
+    # Try to repair without a rig
     hacker_no_repair = Hacker("RepairHacker")
     hacker_no_repair.repair_rig()
 
@@ -114,15 +116,20 @@ def test_edge_cases():
     rig2 = Rig("BrokenRig")
     hacker_no_repair.assign_rig(rig2)
     rig2.take_hit()
-    rig2.take_hit()  # enough to break the rig
+    rig2.take_hit()  # enough to break it
 
     # Repair the damaged rig using a CryptoToken (success case)
     hacker_no_repair.repair_rig()
 
-    # Try to repair again when the rig is already pristine (should print "No repair needed")
+    # Give another CryptoToken to test "no repair needed" scenario
+    hacker_no_repair.get_inventory().append(
+        Asset("CryptoToken", "Used to acquire or repair rigs.")
+    )
+
+    # Try to repair again while rig is pristine (should print "No repair needed")
     hacker_no_repair.repair_rig()
 
-    # Try to encrypt without a Security Chip (should be blocked)
+    # Try to encrypt without a Security Chip (should fail)
     hacker_no_chip = Hacker("NoChipHacker")
     hacker_no_chip._Hacker__has_security_chip = False
     test_asset = Asset("SensitiveFile", "Classified info")
