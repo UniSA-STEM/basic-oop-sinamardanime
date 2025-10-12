@@ -64,7 +64,9 @@ class Rig:
     def is_broken(self):
         return self.__broken
 
-    # Remove a Removable Drive when extracting
+    # Description: Consumes a Removable Drive resource from storage that is used for extracting assets.
+    # Parameters: None.
+    # Returns: True if a Removable Drive was found and removed, False otherwise.
     def consume_removable_drive(self):
         for item in self.__storage:
             if check_asset(item) and item.get_name() == "Removable Drive":
@@ -72,10 +74,12 @@ class Rig:
                 return True
         return False
 
-    # Extract unencrypted Asset objects from rig
+    # Description: Extracts all unencrypted Asset objects from the rig’s storage.
+    # Parameters: None.
+    # Returns: A list of unsecured (unencrypted) Asset objects removed from the rig.
     def extract_unsecured_assets(self):
-        unsecured = []
-        remaining = []
+        unsecured = [] # Will hold unencrypted assets
+        remaining = []  # Holds everything else that stays in storage
         for item in self.__storage:
             # use check_asset to detect Asset objects
             if check_asset(item):
@@ -84,32 +88,39 @@ class Rig:
                 else:
                     remaining.append(item)
             else:
-                # keep resource strings like "Data Spike" or "Removable Drive"
+                # Update storage to contain only remaining items
                 remaining.append(item)
         self.__storage = remaining
         return unsecured
 
-    # Upgrade rig (increase level and storage capacity)
+    # Description: Upgrades the rig, increasing its level and storage capacity.
+    # Parameters: None.
+    # Returns: None. Prints a confirmation message upon successful upgrade.
     def upgrade(self):
         self.__upgrade_level = self.__upgrade_level + 1
         self.__storage_limit = self.__storage_limit + 2
         print(self.__name, "was upgraded to level", str(self.__upgrade_level))
 
-    # Repair rig (reset damage and broken state)
+    # Description: Repairs the rig, resetting damage and restoring it from a broken state.
+    # Parameters: None.
+    # Returns: None. Prints messages describing the result of the repair attempt.
     def repair(self):
         # checks if the rig actually needs repair
         if self.__damage == 0 and not self.__broken:
             print(self.__name, "is already in pristine condition. No repair needed.")
             return
 
-        # perform the repair if damaged
+        # Reset damage and mark rig as functional again
         self.__damage = 0
         self.__broken = False
         print(self.__name, "has been repaired to pristine state.")
 
-    # Generate a new simple asset (auto asset creation)
+    # Description: Automatically generates a new asset inside the rig if space allows.
+    # Parameters: None.
+    # Returns: None. Prints messages describing the generation result.
     def generate_asset(self):
         new_asset = Asset("generated_" + str(len(self.__storage) + 1), "auto-generated")
+        # Add new asset only if storage has room
         if len(self.__storage) < self.__storage_limit:
             self.__storage.append(new_asset)
             print(self.__name, "generated asset", new_asset.get_name())
