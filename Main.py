@@ -126,36 +126,42 @@ def test_upgrade_and_storage():
 # -------------------------------------------------------
 # TEST 4 – Edge Cases
 # -------------------------------------------------------
+
+# Description: Tests edge case scenarios to ensure the system handles invalid or special conditions correctly.
+# Parameters: None.
+# Returns: None. Prints messages showing how each edge case is handled.
 def test_edge_cases():
     print("\n--- TEST 4: Edge Cases ---")
 
-    # Try to upgrade without a rig (should fail gracefully)
+    # hacker tries to upgrade without a rig (should fail)
     hacker_no_rig = Hacker("NoRigHacker")
     hacker_no_rig.upgrade_rig()
 
-    # Try to acquire a rig without a CryptoToken
+    # hacker tries to acquire a rig without a CryptoToken
     hacker_no_token = Hacker("BuyerHacker")
     rig = Rig("CheapRig")
 
-    # Remove the CryptoToken from inventory to simulate shortage
+    # Removes the CryptoToken from inventory to simulate not having one
     token = None
     for item in hacker_no_token.get_inventory():
         if item.get_name() == "CryptoToken":
             token = item
     if token:
         hacker_no_token.get_inventory().remove(token)
-
     hacker_no_token.acquire_rig(rig)
 
-    # Try to repair without a rig
+    # hacker tries to repair when the hacker has no rig assigned (should print an error)
     hacker_no_repair = Hacker("RepairHacker")
     hacker_no_repair.repair_rig()
 
-    # Assign a rig and simulate damage
+    # Assign a rig to the hacker and simulate breaking it
     rig2 = Rig("BrokenRig")
     hacker_no_repair.assign_rig(rig2)
+
+    # Each hit adds damage — after two hits, the rig should be broken
     rig2.take_hit()
-    rig2.take_hit()  # enough to break it
+    rig2.take_hit()
+
 
     # Repair the damaged rig using a CryptoToken (success case)
     hacker_no_repair.repair_rig()
@@ -168,9 +174,13 @@ def test_edge_cases():
     # Try to repair again while rig is pristine (should print "No repair needed")
     hacker_no_repair.repair_rig()
 
-    # Try to encrypt without a Security Chip (should fail)
+    # Tries to encrypt without a Security Chip (should fail)
     hacker_no_chip = Hacker("NoChipHacker")
+
+    # Disables the hacker’s security chip manually
     hacker_no_chip._Hacker__has_security_chip = False
+
+    # Create a sensitive asset and add it to inventory
     test_asset = Asset("SensitiveFile", "Classified info")
     hacker_no_chip.get_inventory().append(test_asset)
     hacker_no_chip.encrypt_asset(test_asset)
@@ -182,20 +192,25 @@ def test_edge_cases():
 # -------------------------------------------------------
 # TEST 5 – Trace Management
 # -------------------------------------------------------
+# Description: Tests trace behaviour across multiple rig upgrades,
+# bulk asset addition, repeated attacks, and encryption blocking when exposed.
+# Parameters: None.
+# Returns: None. Prints actions
 def test_trace_management():
-    print("\n--- TEST 5: Trace Management (more upgrades) ---")
+    print("\n--- TEST 5: Trace Management ---")
 
+    # Created a hacker and rig, then assign the rig to the hacker
     hacker = Hacker("Tracer")
     rig = Rig("TraceRig")
     hacker.assign_rig(rig)
 
-    # Give multiple Hardware Patch assets and upgrade multiple times
+    # Give multiple Hardware Patch assets so we can upgrade the rig several times
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
 
-    # Perform upgrades (consumes the patches)
+    # Perform upgrades so each call consumes one Hardware Patch and increases storage capacity
     hacker.upgrade_rig()
     hacker.upgrade_rig()
     hacker.upgrade_rig()
