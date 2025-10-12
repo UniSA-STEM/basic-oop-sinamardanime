@@ -118,74 +118,79 @@ class Hacker:
         self.__rig.repair()
 
     # Description: Launches a Data Spike from the hacker's assigned rig at a target rig.
-    # Validates exposure, rig existence, and available Data Spikes, then performs the attack,
-    # increases trace, announces exposure if threshold crossed, reports result, and attempts
-    # extraction if the target breaks.
-    # Parameters:
-    #   target_rig – The Rig object being attacked.
+    # Parameters: target_rig which is The Rig object being attacked.
     # Returns: None
     def launch_data_spike(self, target_rig):
-        # block action if exposed
+        # blocks action if exposed and prevents further risky actions while the hacker is compromised
         if self.is_exposed():
             print(self.__name, "is exposed and cannot launch attacks until trace is reduced.")
             return
 
-        # need an attacker rig
+        # ensures the hacker actually has an attacker rig to launch from
+        # without a rig there is no source for Data Spike
         if self.__rig is None:
             print(self.__name, "has no rig to launch data spikes.")
             return
 
-        # consume a data spike from attacker's rig
+        # consume a Data Spike from the attacker's rig storage
+        # spikes are a consumable resource; failing here prevents the attack
         if not self.__rig.consume_data_spike():
             print(self.__name, "has no Data Spikes available to launch.")
             return
 
-        # perform the attack
+        # perform the attack: tell the target rig to take a hit
         target_rig.take_hit()
 
-        # increase trace because this is a risky action
+        # increase trace because launching an attack is risky and detectable
         self.__trace_level = self.__trace_level + 1
 
-        # notify when trace crosses the exposure threshold (new message)
+        # notifies when trace crosses the exposure threshold
+        # this informs the player/tests that future actions may be blocked
         if self.__trace_level > 5:
             print(self.__name, "is now EXPOSED! Actions are blocked until trace is reduced.")
 
-        # friendly readable message instead of True/False
+        # user-friendly report of attack outcome (broken vs still functional)
         if target_rig.is_broken():
             print(self.__name, "launched Data Spike at", target_rig.get_name(), "— Rig is now broken!")
         else:
             print(self.__name, "launched Data Spike at", target_rig.get_name(), "— Rig is still functional.")
 
-        # if the target broke, attempt extraction by consuming a removable drive from attacker's rig
+        # if the target broke, attempt extraction by consuming a Removable Drive
+        # extraction moves unsecured (unencrypted) assets from the broken rig to hacker inventory
         if target_rig.is_broken():
             if self.__rig.consume_removable_drive():
                 unsecured = target_rig.extract_unsecured_assets()
                 for asset in unsecured:
                     self.__inventory.append(asset)
+                # Prints a message showing how many assets were successfully extracted
                 print(self.__name, "extracted", str(len(unsecured)), "unsecured assets from", target_rig.get_name())
+            # If there are no removable drives available, extraction cannot happen
             else:
                 print(self.__name, "has no removable drive to extract assets from", target_rig.get_name())
 
-    # Encrypt an asset in inventory or rig storage
-    # Encrypt an asset in inventory or rig storage
+    # Description: Encrypts an asset found in the hacker’s inventory or rig storage
+    # if not exposed and equipped with a Security Chip.
+    # Parameters: asset – the asset object to be encrypted which must exist in inventory or rig storage.
+    # Returns: None. Prints messages indicating success or failure of encryption.
     def encrypt_asset(self, asset):
         if self.is_exposed():
             print(self.__name, "is exposed and cannot encrypt assets right now.")
             return
+        # Stops if the hacker does not have a Security Chip
         if not self.__has_security_chip:
             print(self.__name, "has no Security Chip to encrypt.")
             return
 
-        found = False  # Track if we found the asset
+        found = False  # Tracks if the asset was found and encrypted
 
-        # Search inventory by name
+        # Searches the hacker's inventory for a matching asset
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == asset.get_name():
                 item.encrypt()
                 print("Encrypted asset:", str(item))
                 found = True
 
-        # Search rig storage if hacker has a rig
+        # If the hacker has a rig, this searches its storage for the asset
         if self.__rig is not None:
             for item in self.__rig.get_storage():
                 if check_asset(item) and item.get_name() == asset.get_name():
@@ -193,11 +198,14 @@ class Hacker:
                     print("Encrypted asset in rig storage:", item.get_name())
                     found = True
 
-        # If not found anywhere, print message
+        # If the asset was not found in either inventory or storage this notifies the user
         if not found:
             print("Asset not found in inventory or rig storage; cannot encrypt.")
 
-    # Decrypt an asset in inventory or rig storage
+    # Description: Decrypts an asset found in the hacker’s inventory or rig storage if not exposed and equipped with a Security Chip.
+    # Parameters: asset – the asset object to be decrypted (must exist in inventory or rig storage).
+    # Returns: None. Prints messages indicating success or failure of decryption.
+
     def decrypt_asset(self, asset):
         if self.is_exposed():
             print(self.__name, "is exposed and cannot decrypt assets right now.")
@@ -226,6 +234,15 @@ class Hacker:
         # If not found anywhere, print message
         if not found:
             print("Asset not found in inventory or rig storage; cannot decrypt.")
+
+
+
+
+
+
+
+
+
 
     # Upgrade the assigned rig using a "Hardware Patch" string in inventory
     def upgrade_rig(self):

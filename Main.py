@@ -34,9 +34,21 @@ def test_battle_and_extraction():
     target_rig.add_asset(secret_doc)
     target_rig.add_asset(encrypted_key)
 
+    # ---- SHOW STORAGE BEFORE ATTACK ----
+    print("\nTargetRig storage BEFORE attack:")
+    for item in target_rig.get_storage():
+        # str(item) prints "[Encrypted]" for encrypted Asset objects
+        print("  ", str(item))
+
     # Launch two data spikes to break the target rig
     attacker.launch_data_spike(target_rig)
     attacker.launch_data_spike(target_rig)
+
+
+    # If extraction already happened, this shows storage after extraction.
+    print("\nTargetRig storage AFTER attacks (immediately after break / extraction):")
+    for item in target_rig.get_storage():
+        print("  ", str(item))
 
     print("\n--- Hacker Summary ---")
     print(attacker)
