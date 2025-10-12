@@ -47,12 +47,14 @@ def test_battle_and_extraction():
         # str(item) prints "[Encrypted]" for encrypted Asset objects
         print("  ", str(item))
 
-    # Launch two data spikes to break the target rig
+    # Launch two data spikes from the attacker to damage / break the target rig
+    # Each launch consumes a Data Spike from attacker_rig and increases target rig damage
     attacker.launch_data_spike(target_rig)
     attacker.launch_data_spike(target_rig)
 
 
-    # If extraction already happened, this shows storage after extraction.
+    # This displays stroage after the attack
+    # If the rig broke and extraction occurred, the rig's storage will reflect remaining items
     print("\nTargetRig storage AFTER attacks (immediately after break / extraction):")
     for item in target_rig.get_storage():
         print("  ", str(item))
@@ -65,16 +67,22 @@ def test_battle_and_extraction():
 # -------------------------------------------------------
 # TEST 2 – Encryption and Decryption
 # -------------------------------------------------------
+# Description: Tests the encryption and decryption process for an asset stored in a hacker’s inventory.
+# Parameters: None.
+# Returns: None. Prints the results of encryption and decryption actions for verification.
 def test_encryption_and_decryption():
     print("\n--- TEST 2: Encryption and Decryption ---")
 
+    # Created a hacker object who will perform encryption/decryption
     hacker = Hacker("Encryptor")
+
+    # Created an asset representing a log file
     file1 = Asset("LogFile", "System activity logs")
 
-    # Add the asset to inventory
+    # Added the asset to the hacker's inventory
     hacker.get_inventory().append(file1)
 
-    # Encrypt and decrypt the same asset
+    # Encrypted and then decrypted the same asset to test functionality
     hacker.encrypt_asset(file1)
     hacker.decrypt_asset(file1)
 
@@ -82,6 +90,9 @@ def test_encryption_and_decryption():
 # -------------------------------------------------------
 # TEST 3 – Rig Upgrade and Storage
 # -------------------------------------------------------
+# Description: Tests rig upgrade using a Hardware Patch and verifies storing and retrieving an asset to/from rig storage.
+# Parameters: None.
+# Returns: None. Shows the setup, actions, and final results on the console.
 def test_upgrade_and_storage():
     print("\n--- TEST 3: Rig Upgrade and Storage ---")
 
