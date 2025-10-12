@@ -195,7 +195,8 @@ def test_trace_management():
     hacker.reduce_trace(20)
     print("\nTrying again after reducing trace:")
     hacker.encrypt_asset(file1)
-
+    print("\nAttempting another attack while EXPOSED:")
+    hacker.launch_data_spike(rig)
 
 # -------------------------------------------------------
 # MAIN DRIVER
