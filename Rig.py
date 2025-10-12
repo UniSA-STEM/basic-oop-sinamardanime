@@ -11,9 +11,13 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 from Asset import Asset, check_asset
 
+# Description: Represents a hacker’s rig device which stores assets, handles upgrades, damage, repairs, and extraction operations.
+# Parameters: name – the name of the rig instance.
+# Returns: None. Initialises default storage, upgrade level, and damage state.
 class Rig:
     def __init__(self, name):
             self.__name = name
+            # Initial rig storage with some default assets and resources
             self.__storage = [
                 Asset("Data Spike", "Used in battles."),
                 Asset("Data Spike", "Used in battles."),
@@ -24,16 +28,20 @@ class Rig:
             self.__upgrade_level = 0
             self.__storage_limit = 5
 
-    # Add an asset or resource if there’s room
+    # Description: Adds an asset to the rig’s storage if space is available.
+    # Parameters: asset – the asset object to add to the rig’s storage.
+    # Returns: True if successfully added, False if storage is full.
     def add_asset(self, asset):
-        # returns True if added, False if storage full
+        # Check if storage is at maximum capacity
         if len(self.__storage) >= self.__storage_limit:
             print("Cannot add asset; storage full for rig", self.__name)
             return False
         self.__storage.append(asset)
         return True
 
-    # Remove a Data Spike (used in attacks)
+    # Description: Consumes a Data Spike resource from the rig’s storage which is used in attacks.
+    # Parameters: None.
+    # Returns: True if a Data Spike was found and removed, False otherwise.
     def consume_data_spike(self):
         for item in self.__storage:
             if check_asset(item) and item.get_name() == "Data Spike":
@@ -41,14 +49,18 @@ class Rig:
                 return True
         return False
 
-    # Apply one hit of damage (can break if threshold reached)
+    # Description: Applies one hit of damage to the rig and checks if it becomes broken.
+    # Parameters: None.
+    # Returns: None. Updates the rig’s damage state and broken status.
     def take_hit(self):
         self.__damage = self.__damage + 1
         threshold = 2 + self.__upgrade_level
         if self.__damage >= threshold:
             self.__broken = True
 
-    # Return broken state
+    # Description: Checks if the rig is currently broken.
+    # Parameters: None.
+    # Returns: True if the rig is broken, False otherwise.
     def is_broken(self):
         return self.__broken
 
