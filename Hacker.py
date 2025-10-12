@@ -117,9 +117,13 @@ class Hacker:
         self.__inventory.remove(token)
         self.__rig.repair()
 
-
-
-    # Launch a Data Spike at another rig
+    # Description: Launches a Data Spike from the hacker's assigned rig at a target rig.
+    # Validates exposure, rig existence, and available Data Spikes, then performs the attack,
+    # increases trace, announces exposure if threshold crossed, reports result, and attempts
+    # extraction if the target breaks.
+    # Parameters:
+    #   target_rig – The Rig object being attacked.
+    # Returns: None
     def launch_data_spike(self, target_rig):
         # block action if exposed
         if self.is_exposed():
