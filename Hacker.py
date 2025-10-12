@@ -324,28 +324,35 @@ class Hacker:
         self.__rig.get_storage().remove(asset)
         print("Retrieved asset", asset.get_name(), "from rig storage.")
 
-    # Retrieve all unencrypted assets from rig into inventory
+    # Description: Retrieves all unencrypted assets from the rig’s storage and moves them into the hacker’s inventory.
+    # Parameters: None. Automatically checks all assets in the rig’s storage.
+    # Returns: None. Prints messages for each asset successfully retrieved.
     def retrieve_all_from_rig(self):
         if self.__rig is None:
+            # Stops if the hacker has no rig assigned
             print(self.__name, "has no rig to retrieve assets from.")
             return
         for item in list(self.__rig.get_storage()):
             if check_asset(item) and not item.is_encrypted():
                 self.retrieve_asset(item)
 
-
-
-    # Scan inventory for an asset by name, remove and return it if found
+    # Description: Scans inventory for an asset by name, removes it from inventory and returns it if found.
+    # Parameters: asset_name – the string name of the asset to look for in the hacker’s inventory.
+    # Returns: The asset object if found and removed; otherwise None. Prints messages describing the result.
     def scan_inventory(self, asset_name):
         for item in list(self.__inventory):
             if check_asset(item) and item.get_name() == asset_name:
                 self.__inventory.remove(item)
                 print("Scanned and removed asset:", asset_name)
                 return item
+        # If loop finishes with no match, notify and return None
         print("No asset found by that name in inventory.")
         return None
 
-    # return a readable summary required by the brief
+    # Description: Returns a readable string summary of the hacker’s current status
+    # including: name, rig, trace level, and inventory contents.
+    # Parameters: None. Automatically gathers data from the hacker’s attributes.
+    # Returns: A formatted string representing the hacker’s summary information.
     def __str__(self):
         names = []
         for item in self.__inventory:
