@@ -202,8 +202,9 @@ class Hacker:
         if not found:
             print("Asset not found in inventory or rig storage; cannot encrypt.")
 
-    # Description: Decrypts an asset found in the hacker’s inventory or rig storage if not exposed and equipped with a Security Chip.
-    # Parameters: asset – the asset object to be decrypted (must exist in inventory or rig storage).
+    # Description: Decrypts an asset found in the hacker’s inventory or rig storage
+    # if not exposed and equipped with a Security Chip.
+    # Parameters: asset – the asset object to be decrypted which must exist in inventory or rig storage.
     # Returns: None. Prints messages indicating success or failure of decryption.
 
     def decrypt_asset(self, asset):
@@ -214,16 +215,16 @@ class Hacker:
             print(self.__name, "has no Security Chip to decrypt.")
             return
 
-        found = False  # Track if we found the asset
+        found = False  # Tracks if we found the asset
 
-        # Search inventory by name
+        # Searches inventory by name
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == asset.get_name():
                 item.decrypt()
                 print("Decrypted asset:", str(item))
                 found = True
 
-        # Search rig storage if hacker has a rig
+        # Searches rig storage if hacker has a rig
         if self.__rig is not None:
             for item in self.__rig.get_storage():
                 if check_asset(item) and item.get_name() == asset.get_name():
@@ -231,20 +232,14 @@ class Hacker:
                     print("Decrypted asset in rig storage:", item.get_name())
                     found = True
 
-        # If not found anywhere, print message
+        # If not found anywhere, it will print a message and lets the user know.
         if not found:
             print("Asset not found in inventory or rig storage; cannot decrypt.")
 
-
-
-
-
-
-
-
-
-
-    # Upgrade the assigned rig using a "Hardware Patch" string in inventory
+    # Description: Upgrades the hacker’s rig by consuming a Hardware Patch asset
+    # from inventory if not exposed and a rig is available.
+    # Parameters: None. The method automatically searches inventory for a Hardware Patch asset.
+    # Returns: None. Prints messages describing success or failure of the rig upgrade.
     def upgrade_rig(self):
         if self.is_exposed():
             print(self.__name, "is exposed and cannot upgrade rigs right now.")
@@ -253,22 +248,25 @@ class Hacker:
             print(self.__name, "has no rig to upgrade.")
             return
 
-        # Find a Hardware Patch Asset in inventory (search by name)
+        # Finds a Hardware Patch Asset in inventory (searches by name)
         patch = None
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "Hardware Patch":
                 patch = item
-
+        # If no Hardware Patch is found it stops and notifies the user
         if patch is None:
             print("No Hardware Patch found in inventory.")
             return
 
-        # consume the patch and perform upgrade
+        # Takes the Hardware Patch out of the hacker’s inventory and applies it to upgrade the rig.
         self.__inventory.remove(patch)
         self.__rig.upgrade()
 
-    # Store a specific asset from inventory into the assigned rig's storage
+    # Description: Stores a specific asset from the hacker’s inventory into the assigned rig’s storage if allowed.
+    # Parameters: asset – the asset object to be stored and must exist in the hacker’s inventory).
+    # Returns: None. Prints messages describing whether storage was successful or why it failed.
     def store_asset(self, asset):
+        # Block storing if the hacker is exposed
         if self.is_exposed():
             print(self.__name, "is exposed and cannot store assets right now.")
             return
@@ -286,6 +284,10 @@ class Hacker:
         if self.__rig.add_asset(asset):
             self.__inventory.remove(asset)
             print("Stored asset", asset.get_name(), "into rig storage.")
+
+
+
+
 
     # Store all Asset objects from inventory into the rig (respects rig capacity)
     def store_all_assets(self):
