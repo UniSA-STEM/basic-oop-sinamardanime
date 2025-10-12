@@ -216,7 +216,8 @@ def test_trace_management():
     hacker.upgrade_rig()
     hacker.upgrade_rig()
 
-    # Attempt to add many Data Spikes to the rig; count how many actually succeed
+    # Attempt to add many Data Spikes to the rig to test the rig's storage limit after upgrades.
+    # Count how many Data Spikes were actually accepted (rig.add_asset returns False when storage is full).
     added = 0
     attempts = 40
     for _ in range(attempts):
@@ -226,10 +227,12 @@ def test_trace_management():
 
     print("Attempted to add", attempts, "Data Spikes; actually added", added)
 
-    # Count spikes in storage (no sum())
+
+    # Count how many Data Spikes are currently stored in the rig
+    # Loops through each item in rig storage and checks if its name matches "Data Spike"
     spikes = 0
     for item in rig.get_storage():
-        if hasattr(item, "get_name") and item.get_name() == "Data Spike":
+        if check_asset(item) and item.get_name() == "Data Spike":
             spikes = spikes + 1
     print("Data Spikes available on rig before attacks:", spikes)
 
