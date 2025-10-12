@@ -13,28 +13,35 @@ from Hacker import Hacker
 # -------------------------------------------------------
 # TEST 1 – Battle and Extraction
 # -------------------------------------------------------
+
+# Description: Runs a scenario test that simulates a battle using Data Spikes
+# and attempts asset extraction from a broken rig.
+# Parameters: None.
+# Returns: None. Prints setup, storage before/after attack, and a final hacker summary to the console.
 def test_battle_and_extraction():
     print("\n--- TEST 1: Battle and Extraction ---")
 
-    # Create rigs
+    # Created rigs for the target and the attacker
     target_rig = Rig("TargetRig")
     attacker_rig = Rig("AttackerRig")
 
+    # Display initial condition and level for the target rig
     print("TargetRig condition / level:", target_rig.get_condition(), "/", target_rig.get_upgrade_level())
 
-    # Create hackers
+    # Created an attacker hacker and assigned the attack rig
     attacker = Hacker("Attacker")
     attacker.assign_rig(attacker_rig)
 
-    # Add assets to target rig (1 encrypted, 1 unencrypted)
+    # Prepare assets for the target rig: one unencrypted and one encrypted
     secret_doc = Asset("SecretDoc", "Top secret information")
     encrypted_key = Asset("EncryptedKey", "Private key file")
-    encrypted_key.encrypt()
+    encrypted_key.encrypt() # marks this asset as encrypted so it should NOT be extracted
 
+    # Adds assets to target rig storage
     target_rig.add_asset(secret_doc)
     target_rig.add_asset(encrypted_key)
 
-    # ---- SHOW STORAGE BEFORE ATTACK ----
+    # Displays storage before attack
     print("\nTargetRig storage BEFORE attack:")
     for item in target_rig.get_storage():
         # str(item) prints "[Encrypted]" for encrypted Asset objects
