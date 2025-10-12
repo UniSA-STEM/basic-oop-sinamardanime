@@ -257,7 +257,29 @@ def test_trace_management():
     print("\nAttempting another attack while EXPOSED:")
     hacker.launch_data_spike(rig)
 
+# -----------------------------------------
+# TEST 6: Rig Condition Changes
+# -----------------------------------------
 
+
+def test_rig_condition_changes():
+    print("\n--- TEST 6: Rig Condition Changes ---")
+
+    rig = Rig("ConditionRig")
+    print("Initial condition:", rig.get_condition())
+
+    # Damage test
+    rig.take_hit()
+    rig.take_hit()
+    print("After 2 hits:", rig.get_condition())
+
+    # Repair test
+    rig.repair()
+    print("After repair:", rig.get_condition())
+
+    # Upgrade test
+    rig.upgrade()
+    print("After upgrade:", rig.get_condition())
 
 # Description: Runs all test functions in sequence to demonstrate and verify full system behaviour.
 # Parameters: None.
@@ -278,6 +300,8 @@ def main():
 
     # Run test for trace level management, upgrades, and exposure logic
     test_trace_management()
+
+    test_rig_condition_changes()
 
 
 # Description: Ensures that all tests run only when this script is executed directly.
