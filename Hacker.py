@@ -266,21 +266,25 @@ class Hacker:
     # Parameters: asset – the asset object to be stored and must exist in the hacker’s inventory).
     # Returns: None. Prints messages describing whether storage was successful or why it failed.
     def store_asset(self, asset):
-        # Block storing if the hacker is exposed
+        # Blocks storing if the hacker is exposed
         if self.is_exposed():
             print(self.__name, "is exposed and cannot store assets right now.")
             return
+        # Stops if there is no rig assigned to the hacker
         if self.__rig is None:
             print(self.__name, "has no rig to store assets.")
             return
+        # Check if the asset actually exists in the hacker’s inventory
         if asset not in self.__inventory:
             print("Asset not found in inventory.")
             return
-        # Block transferring encrypted assets
+
+        # Prevents encrypted assets from being stored until they are decrypted
         if check_asset(asset) and asset.is_encrypted():
             print("Cannot store encrypted asset until it is decrypted:", asset.get_name())
             return
-        # Try to add to rig
+
+        # Removes the asset from inventory once successfully stored
         if self.__rig.add_asset(asset):
             self.__inventory.remove(asset)
             print("Stored asset", asset.get_name(), "into rig storage.")
