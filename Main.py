@@ -218,7 +218,7 @@ def test_trace_management():
 
     # Attempt to add many Data Spikes to the rig to test the rig's storage limit after upgrades.
     # Count how many Data Spikes were actually accepted (rig.add_asset returns False when storage is full)
-    # so it would actually add 13 because it has a storage limit.
+    # so it would actually add 10 because it has a storage limit.
     added = 0
     attempts = 40
     for _ in range(attempts):
