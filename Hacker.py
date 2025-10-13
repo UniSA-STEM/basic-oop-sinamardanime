@@ -1,10 +1,9 @@
 """
 File: Hacker.py
-Description: Defines the Hacker class. A hacker has a name, an inventory and an assigned rig.
-This class handles acquiring and assigning rigs, launching attacks, extracting assets,
-upgrading and repairing rigs, encrypting and decrypting assets, storing and retrieving items,
-managing trace level and exposure, and basic inventory scanning. Methods print clear messages
-so behaviour can be checked during tests.
+Description: This file defines the Hacker class used in the 'Into the Grid' system. It represents
+a hacker who can use rigs, manage assets, and perform actions like attacking, upgrading,
+encrypting, and repairing. The class controls how hackers interact with rigs and assets
+through their inventory and trace system.
 
 Author: Sina Mardani Mehrabad
 ID: Marsyl127
