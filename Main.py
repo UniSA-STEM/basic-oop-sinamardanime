@@ -173,6 +173,8 @@ def test_edge_cases():
     hacker_no_repair = Hacker("RepairHacker")
     hacker_no_repair.repair_rig()
 
+
+
     # Assign a rig to the hacker and simulate breaking it
     rig2 = Rig("BrokenRig")
     hacker_no_repair.assign_rig(rig2)
@@ -184,6 +186,13 @@ def test_edge_cases():
 
     # Repair the damaged rig using a CryptoToken (success case)
     hacker_no_repair.repair_rig()
+
+    # Check the hacker's inventory after repairing the rig to confirm that the CryptoToken was used
+    inventory_list = []
+    for i in hacker_no_repair.get_inventory():
+        inventory_list.append(str(i))
+    print("Hacker inventory after repair:", inventory_list)
+
 
     # Give another CryptoToken to test "no repair needed" scenario
     hacker_no_repair.get_inventory().append(
@@ -303,6 +312,8 @@ def test_rig_condition_changes():
     # increase rig’s upgrade level and capacity
     rig.upgrade()
     print("After upgrade:", rig.get_condition())
+
+
 
 # Description: Runs all test functions in sequence to demonstrate and verify full system behaviour.
 # Parameters: None.
