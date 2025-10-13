@@ -118,13 +118,28 @@ def test_upgrade_and_storage():
 
     # Stored the asset into the rig which will remove from inventory if successful
     hacker.store_asset(patch_notes)
-    print("Rig storage after storing PatchNotes:", [str(i) for i in rig.get_storage()])
-    print("Hacker inventory after storing PatchNotes:", [str(i) for i in hacker.get_inventory()])
+    storage_list = []
+    for i in rig.get_storage():
+        storage_list.append(str(i))
+    print("Rig storage after storing PatchNotes:", storage_list)
+
+    inventory_list = []
+    for i in hacker.get_inventory():
+        inventory_list.append(str(i))
+    print("Hacker inventory after storing PatchNotes:", inventory_list)
 
     # Retrieve the asset back from the rig into inventory
     hacker.retrieve_asset(patch_notes)
-    print("Rig storage after retrieving PatchNotes:", [str(i) for i in rig.get_storage()])
-    print("Hacker inventory after retrieving PatchNotes:", [str(i) for i in hacker.get_inventory()])
+
+    storage_list = []
+    for i in rig.get_storage():
+        storage_list.append(str(i))
+    print("Rig storage after retrieving PatchNotes:", storage_list)
+
+    inventory_list = []
+    for i in hacker.get_inventory():
+        inventory_list.append(str(i))
+    print("Hacker inventory after retrieving PatchNotes:", inventory_list)
 
 
 # -------------------------------------------------------
