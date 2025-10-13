@@ -1,8 +1,15 @@
-# Asset.py
-# Represents a digital asset with a name, description, and encryption flag.
-# Also provides check_asset(obj) helper to test whether an object is an Asset.
+"""
+File: Asset.py
+Description: This file defines the Asset class used in the 'Into the Grid' system. It represents digital
+items that can be encrypted, decrypted, stored or transferred between hackers and rigs. Each
+asset has a name, description and encryption state, and is used in actions such as upgrades,
+battles or data protection.
 
-
+Author: Sina Mardani Mehrabad
+ID: Marsyl127
+Username: sinamardanime
+This is my own work as defined by the University's Academic Misconduct Policy.
+"""
 
 # Description: Defines the Asset class, representing a digital asset
 # that can be encrypted or decrypted, with a name and description.

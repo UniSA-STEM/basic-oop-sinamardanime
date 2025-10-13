@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 from Rig import Rig
 # check_asset checks whether the provided object is an instance of the Asset class. Used throughout the program to
 # safely confirm that an object is a valid Asset type.

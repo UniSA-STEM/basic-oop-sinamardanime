@@ -6,8 +6,9 @@ ID: <student_id>
 Username: <username>
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
-# Rig.py
-# Represents a rig (computer). It can take hits, be upgraded, repaired, and hold assets.
+
+
+
 
 from Asset import Asset, check_asset
 
