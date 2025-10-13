@@ -204,7 +204,7 @@ def test_trace_management():
     rig = Rig("TraceRig")
     hacker.assign_rig(rig)
 
-    # Give multiple Hardware Patch assets so we can upgrade the rig several times
+    # Gives multiple Hardware Patch assets so we can upgrade the rig several times
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
