@@ -232,6 +232,8 @@ def test_trace_management():
     rig = Rig("TraceRig")
     hacker.assign_rig(rig)
 
+
+
     # Gives multiple Hardware Patch assets so we can upgrade the rig several times
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
     hacker.get_inventory().append(Asset("Hardware Patch", "Used to upgrade rigs."))
@@ -313,7 +315,37 @@ def test_rig_condition_changes():
     rig.upgrade()
     print("After upgrade:", rig.get_condition())
 
+# -------------------------------------------------------
+# TEST 7 – Rig Acquisition
+# -------------------------------------------------------
+# Description: Tests whether a CryptoToken is properly consumed
+# when a hacker acquires a rig using the acquire_rig() method.
+# Parameters: None.
+# Returns: None. Prints the hacker's inventory before and after acquisition
+# to confirm the CryptoToken was used.
+def test_rig_acquisition():
+    print("\n--- TEST 7: Rig Acquisition ---")
 
+    # Create a new hacker with the default CryptoToken
+    hacker = Hacker("Buyer")
+
+    # Create a new rig that the hacker will purchase
+    rig = Rig("NewRig")
+
+    # Create and print a list of inventory items before acquiring the rig
+    inventory_before = []
+    for i in hacker.get_inventory():
+        inventory_before.append(str(i))
+    print("Inventory before acquiring rig:", inventory_before)
+
+    # Attempt to acquire the rig — this should consume one CryptoToken
+    hacker.acquire_rig(rig)
+
+    # Create and print a list of inventory items after acquiring the rig
+    inventory_after = []
+    for i in hacker.get_inventory():
+        inventory_after.append(str(i))
+    print("Inventory after acquiring rig:", inventory_after)
 
 # Description: Runs all test functions in sequence to demonstrate and verify full system behaviour.
 # Parameters: None.
@@ -337,6 +369,7 @@ def main():
 
     test_rig_condition_changes()
 
+  test_rig_acquisition()
 
 # Description: Ensures that all tests run only when this script is executed directly.
 
