@@ -1,4 +1,15 @@
+"""
+File: Hacker.py
+Description: Defines the Hacker class. A hacker has a name, an inventory and an assigned rig.
+This class handles acquiring and assigning rigs, launching attacks, extracting assets,
+upgrading and repairing rigs, encrypting and decrypting assets, storing and retrieving items,
+managing trace level and exposure, and basic inventory scanning. Methods print clear messages
+so behaviour can be checked during tests.
 
+Author: Sina Mardani Mehrabad
+ID: Marsyl127
+Username: sinamardanime
+This is my own work as defined by the University's Academic Misconduct Policy.
 
 
 
@@ -6,9 +17,9 @@
 
 
 from Rig import Rig
+
 # check_asset checks whether the provided object is an instance of the Asset class. Used throughout the program to
 # safely confirm that an object is a valid Asset type.
-
 from Asset import Asset, check_asset
 
 

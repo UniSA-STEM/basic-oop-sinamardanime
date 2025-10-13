@@ -1,14 +1,15 @@
 """
 File: Rig.py
-Description: <A brief description of this Python module.>
-Author: <full name>
-ID: <student_id>
-Username: <username>
+Description: This file defines the Rig class for the 'Into the Grid' system. A rig represents a hacker’s
+computer that stores assets, takes damage, and can be upgraded or repaired. It starts with
+basic items like Data Spikes and a Removable Drive and supports actions such as taking hits,
+extracting assets, and generating new ones.
+
+Author: Sina Mardani Mehrabad
+ID: Marsyl127
+Username: sinamardanime
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
-
-
-
 
 from Asset import Asset, check_asset
 
