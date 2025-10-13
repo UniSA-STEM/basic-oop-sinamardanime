@@ -336,7 +336,7 @@ def test_rig_acquisition():
     inventory_before = []
     for i in hacker.get_inventory():
         inventory_before.append(str(i))
-    print("Inventory before acquiring rig:", inventory_before)
+    print(" Hacker Inventory before acquiring rig:", inventory_before)
 
     # Attempt to acquire the rig — this should consume one CryptoToken
     hacker.acquire_rig(rig)
@@ -369,7 +369,7 @@ def main():
 
     test_rig_condition_changes()
 
-  test_rig_acquisition()
+    test_rig_acquisition()
 
 # Description: Ensures that all tests run only when this script is executed directly.
 
