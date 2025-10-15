@@ -367,8 +367,10 @@ def main():
     # Run test for trace level management, upgrades, and exposure logic
     test_trace_management()
 
+    # Runs test for rig condition changes after damage repair and upgrades
     test_rig_condition_changes()
 
+    # Runs test for rig acquisition and CryptoToken consumption
     test_rig_acquisition()
 
 # Description: Ensures that all tests run only when this script is executed directly.
