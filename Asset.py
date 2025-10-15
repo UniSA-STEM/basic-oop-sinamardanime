@@ -16,7 +16,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 # Also includes a helper function to verify whether an object is an Asset instance.
 class Asset:
     def __init__(self, name, description):
-        # store asset info
+        # stores asset info
         self.__name = name
         self.__description = description
         self.__encrypted = False

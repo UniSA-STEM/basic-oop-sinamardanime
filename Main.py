@@ -25,9 +25,11 @@ from Hacker import Hacker
 def test_battle_and_extraction():
     print("\n--- TEST 1: Battle and Extraction ---")
 
+
     # Created rigs for the target and the attacker
     target_rig = Rig("TargetRig")
     attacker_rig = Rig("AttackerRig")
+
 
     # Display initial condition and level for the target rig
     print("TargetRig condition / level:", target_rig.get_condition(), "/", target_rig.get_upgrade_level())
@@ -35,6 +37,10 @@ def test_battle_and_extraction():
     # Created an attacker hacker and assigned the attack rig
     attacker = Hacker("Attacker")
     attacker.assign_rig(attacker_rig)
+
+    print("\n--- Hacker Summary before any attacks ---")
+    print(attacker)
+
 
     # Prepare assets for the target rig: one unencrypted and one encrypted
     secret_doc = Asset("SecretDoc", "Top secret information")
