@@ -336,7 +336,7 @@ def test_rig_acquisition():
     inventory_before = []
     for i in hacker.get_inventory():
         inventory_before.append(str(i))
-    print(" Hacker Inventory before acquiring rig:", inventory_before)
+    print("Hacker Inventory before acquiring rig:", inventory_before)
 
     # Attempt to acquire the rig — this should consume one CryptoToken
     hacker.acquire_rig(rig)
