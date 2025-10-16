@@ -10,11 +10,6 @@ ID: Marsyl127
 Username: sinamardanime
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
-
-
-
-
-
 from Rig import Rig
 
 # check_asset checks whether the provided object is an instance of the Asset class. Used throughout the program to

@@ -1,6 +1,6 @@
 """
 File: Rig.py
-Description: This file defines the Rig class for the 'Into the Grid' system. A rig represents a hacker’s
+Description: This file defines the Rig class for the system. A rig represents a hacker’s
 computer that stores assets, takes damage, and can be upgraded or repaired. It starts with
 basic items like Data Spikes and a Removable Drive and supports actions such as taking hits,
 extracting assets, and generating new ones.
