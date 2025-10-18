@@ -40,6 +40,18 @@ class Asset:
     def get_name(self):
         return self.__name
 
+    # Description: Updates the asset’s name.
+    # Parameters:  new_name – The new name for the asset.
+    # Returns:     None
+    def set_name(self, new_name):
+        self.__name = new_name
+
+        # Description: Updates the asset’s description.
+        # Parameters:  new_description – The new description for the asset.
+        # Returns:     None
+    def set_description(self, new_description):
+        self.__description = new_description
+
     # Description: Checks whether the asset is currently encrypted.
     # Parameters:  None
     # Returns: a boolean: True if encrypted and False if otherwise.
