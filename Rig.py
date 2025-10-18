@@ -30,6 +30,29 @@ class Rig:
             self.__upgrade_level = 0
             self.__storage_limit = 5
 
+    # Updates the rig’s name.
+    # Parameters: new_name – new name for the rig.
+    def set_name(self, new_name):
+        self.__name = new_name
+
+    # Updates the rig’s upgrade level.
+    # Parameters: level – integer upgrade level.
+    def set_upgrade_level(self, level):
+        if level >= 0:
+            self.__upgrade_level = level
+        else:
+            print("Invalid upgrade level; must be non-negative.")
+
+    # Updates the storage limit of the rig.
+    # Parameters: limit – integer storage capacity.
+    def set_storage_limit(self, limit):
+        if limit > 0:
+            self.__storage_limit = limit
+        else:
+            print("Storage limit must be positive.")
+
+
+
     # Description: Adds an asset to the rig’s storage if space is available.
     # Parameters: asset – the asset object to add to the rig’s storage.
     # Returns: True if successfully added, False if storage is full.
