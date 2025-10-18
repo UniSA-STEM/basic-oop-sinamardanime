@@ -42,6 +42,18 @@ class Hacker:
     def get_rig(self):
         return self.__rig
 
+    # Updates the hacker's name.
+    def set_name(self, new_name):
+        self.__name = new_name
+
+    # Assigns a new rig (or None to remove).
+    def set_rig(self, new_rig):
+        if isinstance(new_rig, Rig) or new_rig is None:
+            self.__rig = new_rig
+        else:
+            print("Invalid rig assignment.")
+
+
     # Description: Returns the hacker’s current trace level.
     # Parameters: None
     # Returns: An integer value representing the hacker’s trace level.
