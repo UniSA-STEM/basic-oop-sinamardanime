@@ -6,7 +6,7 @@ encrypting, and repairing. The class controls how hackers interact with rigs and
 through their inventory and trace system.
 
 Author: Sina Mardani Mehrabad
-ID: Marsyl127
+ID: Marsyl27
 Username: sinamardanime
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
@@ -16,38 +16,14 @@ from Rig import Rig
 # safely confirm that an object is a valid Asset type.
 from Asset import Asset, check_asset
 
-
 """
-File: Hacker.py
-Description: This file defines the Hacker class used in the 'Into the Grid' system. It represents
-a hacker who can use rigs, manage assets, and perform actions like attacking, upgrading,
-encrypting, and repairing. The class controls how hackers interact with rigs and assets
-through their inventory and trace system.
-
-Author: Sina Mardani Mehrabad
-ID: Marsyl127
-Username: sinamardanime
-This is my own work as defined by the University's Academic Misconduct Policy.
-"""
-
-from Rig import Rig
-from Asset import Asset, check_asset
-
+   Description: Represents a hacker who can acquire rigs, manage assets,
+   perform encryption, attack other rigs, and repair or upgrade their equipment.
+   Parameters: name – The hacker’s alias or display name.
+   Returns: None. Initialises inventory, rig, and trace attributes.
+   """
 
 class Hacker:
-    """
-    Description: Represents a hacker who can acquire rigs, manage assets,
-    perform encryption, attack other rigs, and repair or upgrade their equipment.
-    Parameters: name – The hacker’s alias or display name.
-    Returns: None. Initialises inventory, rig, and trace attributes.
-    """
-
-    """
-    Description: Initialises a new Hacker with a name, basic inventory (CryptoToken),
-    and base attributes like trace level and security chip.
-    Parameters: name – string, hacker’s alias.
-    Returns: None.
-    """
     def __init__(self, name):
         self.__name = name  # stores the hacker’s name
         self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]  # ensures hacker starts with one CryptoToken
