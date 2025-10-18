@@ -19,96 +19,99 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 class Asset:
 
+    """
+    Description: Represents a digital asset that can be encrypted or decrypted,
+    with a name and description. Includes methods for encryption control and
+    safe access to asset information.
+    """
+
+
+    """ 
+    Description: Initialises a new Asset object.
+    Parameters: name – string name of the asset, description – string explanation of its purpose.
+    Returns: None
+    """
     def __init__(self, name, description):
-        """
-        Description: Initialises a new Asset object.
-        Parameters: name – string name of the asset, description – string explanation of its purpose.
-        Returns: None
-        """
-        self.__name = name  #stores asset name
-        self.__description = description # stores asset description
-        self.__encrypted = False    # ensures asset starts unencrypted
+        self.__name = name  # stores asset name
+        self.__description = description  # stores asset description
+        self.__encrypted = False  # ensures asset starts unencrypted
 
 
 
+    """ 
+    Description: Marks this asset as encrypted.
+    Encrypted assets are protected and cannot be transferred or extracted until decrypted.
+    Parameters: None
+    Returns: None
+    """
     def encrypt(self):
-        """
-        Description: Marks this asset as encrypted.
-        Encrypted assets are protected and cannot be transferred or extracted until decrypted.
-        Parameters: None
-        Returns: None
-        """
-        self.__encrypted = True   # sets encryption flag to True
+        self.__encrypted = True  # sets encryption flag to True
 
 
 
+    """ 
+    Description: Marks this asset as decrypted (unencrypted).
+    Parameters: None
+    Returns: None
+    """
     def decrypt(self):
-        """
-        Description: Marks this asset as decrypted (unencrypted).
-        Parameters: None
-        Returns: None
-        """
-        self.__encrypted = False # resets encryption flag to False
+        self.__encrypted = False  # resets encryption flag to False
 
 
 
+    """ 
+    Description: Returns the asset’s name.
+    Parameters: None
+    Returns: str – The name of the asset.
+    """
     def get_name(self):
-        """
-        Description: Returns the asset’s name.
-        Parameters: None
-        Returns: str – The name of the asset.
-        """
-        return self.__name # returns stored asset name
+        return self.__name  # returns stored asset name
 
-
-
+    """ 
+    Description: Updates the asset’s name.
+    Parameters: new_name – The new name for the asset.
+    Returns: None
+    """
     def set_name(self, new_name):
-        """
-        Description: Updates the asset’s name.
-        Parameters: new_name – The new name for the asset.
-        Returns: None
-        """
         self.__name = new_name  # updates asset name safely
 
 
-
+    """ 
+    Description: Updates the asset’s description.
+    Parameters: new_description – The new description for the asset.
+    Returns: None
+    """
     def set_description(self, new_description):
-        """
-        Description: Updates the asset’s description.
-        Parameters: new_description – The new description for the asset.
-        Returns: None
-        """
-        self.__description = new_description # updates description safely
+        self.__description = new_description  # updates description safely
 
 
-
+    """ 
+    Description: Checks whether the asset is currently encrypted.
+    Parameters: None
+    Returns: bool – True if encrypted, False otherwise.
+    """
     def is_encrypted(self):
-        """
-        Description: Checks whether the asset is currently encrypted.
-        Parameters: None
-        Returns: bool – True if encrypted, False otherwise.
-        """
-        return self.__encrypted # returns encryption status
+        return self.__encrypted  # returns encryption status
 
 
-
+    """ 
+    Description: Returns a human-readable string showing the asset’s
+    name, description, and encryption status.
+    Parameters: None
+    Returns: str – formatted string representing the asset.
+    """
     def __str__(self):
-        """
-        Description: Returns a human-readable string showing the asset’s
-        name, description, and encryption status.
-        Parameters: None
-        Returns: str – formatted string representing the asset.
-        """
-        if self.__encrypted: # checks encryption state before displaying
+        if self.__encrypted:  # checks encryption state before displaying
             return self.__name + ": " + self.__description + " [Encrypted]"
         else:
             return self.__name + ": " + self.__description
 
+
+""" 
+Description: Helper function that checks if an object is an instance
+of the Asset class. Used throughout the program to safely identify valid asset objects.
+Parameters: obj – The object to test.
+Returns: bool – True if obj is an Asset, False otherwise.
+"""
 def check_asset(obj):
-    """
-    Description: Helper function that checks if an object is an instance
-    of the Asset class. Used throughout the program to safely identify valid asset objects.
-    Parameters: obj – The object to test.
-    Returns: bool – True if obj is an Asset, False otherwise.
-    """
-    return isinstance(obj, Asset) # ensures provided object is a valid Asset
+    return isinstance(obj, Asset)  # ensures provided object is a valid Asset
