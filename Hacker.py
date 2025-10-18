@@ -17,11 +17,20 @@ from Rig import Rig
 from Asset import Asset, check_asset
 
 
-# Description:
-# Initialises a new Hacker object with a name, starting inventory (1 CryptoToken), and some basic attributes.
-# Parameters: name – The hacker’s display name or alias.
-# Returns: None
 class Hacker:
+    """
+    Description: Represents a hacker who can acquire rigs, manage assets,
+    perform encryption, attack other rigs, and repair or upgrade their equipment.
+    Parameters: name – The hacker’s alias or display name.
+    Returns: None. Initialises inventory, rig, and trace attributes.
+    """
+
+    """
+    Description: Initialises a new Hacker with a name, basic inventory (CryptoToken),
+    and base attributes like trace level and security chip.
+    Parameters: name – string, hacker’s alias.
+    Returns: None.
+    """
     def __init__(self, name):
         self.__name = name
         self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]
@@ -29,192 +38,185 @@ class Hacker:
         self.__has_security_chip = True
         self.__trace_level = 0
 
-
-    # Description: Returns the list of assets currently in the hacker's inventory.
-    # Parameters: None
-    # Returns: The hacker’s inventory list containing Asset objects.
+    """
+    Description: Returns the list of assets currently in the hacker's inventory.
+    Parameters: None.
+    Returns: A list of Asset objects representing the hacker’s inventory.
+    """
     def get_inventory(self):
         return self.__inventory
 
-    # Description:  Returns the Rig object currently assigned to the hacker.
-    # Parameters: None
-    # Returns: The hacker’s assigned Rig, or None if no rig is set.
+    """
+    Description: Returns the Rig object currently assigned to the hacker.
+    Parameters: None.
+    Returns: The hacker’s assigned Rig object, or None if no rig is set.
+    """
     def get_rig(self):
         return self.__rig
 
-    # Updates the hacker's name.
+    """
+    Description: Updates the hacker's name.
+    Parameters: new_name – string, the new name for the hacker.
+    Returns: None.
+    """
     def set_name(self, new_name):
         self.__name = new_name
 
-    # Assigns a new rig (or None to remove).
+    """
+    Description: Assigns a new rig to the hacker (or removes one if None is passed).
+    Parameters: new_rig – Rig object or None.
+    Returns: None. Prints warning if invalid type.
+    """
     def set_rig(self, new_rig):
         if isinstance(new_rig, Rig) or new_rig is None:
             self.__rig = new_rig
         else:
             print("Invalid rig assignment.")
 
-
-    # Description: Returns the hacker’s current trace level.
-    # Parameters: None
-    # Returns: An integer value representing the hacker’s trace level.
+    """
+    Description: Returns the hacker’s current trace level.
+    Parameters: None.
+    Returns: Integer – the hacker’s trace level.
+    """
     def get_trace_level(self):
         return self.__trace_level
 
-    # Description: Checks whether the hacker is exposed.
-    #  A hacker becomes exposed when their trace level exceeds 5.
-    # Parameters: None
-    # Returns: True if the hacker’s trace level is greater than 5, otherwise False.
+    """
+    Description: Checks if the hacker is currently exposed.
+    A hacker becomes exposed when trace level > 5.
+    Parameters: None.
+    Returns: True if trace level > 5, otherwise False.
+    """
     def is_exposed(self):
         return self.__trace_level > 5
 
-    # Description: Reduces the hacker’s trace level by a specific amount.
-    # Trace cannot go below 0.
-    # Parameters: amount is the number by which to reduce the trace level.
-    # Returns: None
+    """
+    Description: Reduces the hacker’s trace level by a specific amount, never going below 0.
+    Parameters: amount – integer amount to reduce.
+    Returns: None. Prints updated trace level.
+    """
     def reduce_trace(self, amount):
-        self.__trace_level = self.__trace_level - amount
+        self.__trace_level -= amount
         if self.__trace_level < 0:
             self.__trace_level = 0
         print(self.__name, "reduced trace to", str(self.__trace_level))
 
-    # Description: Lets the hacker buy and activate a rig using a CryptoToken.
-    # Validates the rig, checks for a token in inventory, removes it, and assigns the rig to the hacker.
-    # Parameters: rig – The Rig object the hacker wants to acquire.
-    # Returns: None
+    """
+    Description: Lets the hacker buy and activate a rig using a CryptoToken.
+    Validates the rig, checks inventory for a CryptoToken, removes it, and assigns the rig.
+    Parameters: rig – Rig object to acquire.
+    Returns: None. Prints result.
+    """
     def acquire_rig(self, rig):
-        # ensures the given object is a Rig instance and prevents invalid data types or accidental misuse
         if not isinstance(rig, Rig):
             print("Acquired rig must be a Rig instance.")
             return
 
-        # looks for a CryptoToken in the hacker's inventory as tokens are required as the "currency" for rig acquisition
         token = None
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "CryptoToken":
                 token = item
 
-        # stops here if no CryptoToken is found
-        # this makes it fair by preventing free rig activation
         if token is None:
             print(self.__name, "does not have a CryptoToken to acquire a rig.")
             return
 
-        # remove the CryptoToken from inventory to simulate spending it
-        # without this step, the hacker could reuse the same token indefinitely
         self.__inventory.remove(token)
-
-        # assigns the rig to the hacker and displays confirmation message
         self.__rig = rig
         print("Rig '" + rig.get_name() + "' has been activated by hacker " + self.__name + ".")
 
-    # Description: Directly assigns a rig to the hacker without spending a CryptoToken.
-    # Parameters: rig – The Rig object to be assigned to the hacker.
-    # Returns: None
+    """
+    Description: Directly assigns a rig to the hacker without using a CryptoToken.
+    Parameters: rig – Rig object.
+    Returns: None.
+    """
     def assign_rig(self, rig):
-        # verifies that the provided object is a Rig
         if isinstance(rig, Rig):
             self.__rig = rig
-            # prints a confirmation message showing who received which rig
             print(self.__name, "assigned rig", rig.get_name())
 
-    # Description: Repairs the hacker’s rig using a CryptoToken from inventory.
-    # Ensures the hacker has a rig assigned and owns a CryptoToken before performing the repair.
-    # This function also Prevents free or invalid repairs by checking conditions first.
-    # Parameters: None
-    # Returns: None
+    """
+    Description: Repairs the hacker’s rig using a CryptoToken from inventory.
+    Ensures the hacker has a rig and CryptoToken before repairing.
+    Parameters: None.
+    Returns: None.
+    """
     def repair_rig(self):
-        # checks if the hacker currently has a rig
         if self.__rig is None:
             print(self.__name, "has no rig to repair.")
             return
-        # searches the hacker’s inventory for a CryptoToken
+
         token = None
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "CryptoToken":
                 token = item
-        # Checks if the hacker has a CryptoToken before performing a repair.
+
         if token is None:
             print(self.__name, "has no CryptoToken to repair the rig.")
             return
 
-        # remove the CryptoToken from inventory to simulate it being spent
         self.__inventory.remove(token)
         self.__rig.repair()
 
-    # Description: Launches a Data Spike from the hacker's assigned rig at a target rig.
-    # Parameters: target_rig which is The Rig object being attacked.
-    # Returns: None
+    """
+    Description: Launches a Data Spike attack from the hacker’s rig at a target rig.
+    Parameters: target_rig – Rig object to attack.
+    Returns: None. Prints battle results.
+    """
     def launch_data_spike(self, target_rig):
-        # blocks action if exposed and prevents further risky actions while the hacker is compromised
         if self.is_exposed():
             print(self.__name, "is exposed and cannot launch attacks until trace is reduced.")
             return
 
-        # ensures the hacker actually has an attacker rig to launch from
-        # without a rig there is no source for Data Spike
         if self.__rig is None:
             print(self.__name, "has no rig to launch data spikes.")
             return
 
-        # consume a Data Spike from the attacker's rig storage
-        # spikes are a consumable resource; failing here prevents the attack
         if not self.__rig.consume_data_spike():
             print(self.__name, "has no Data Spikes available to launch.")
             return
 
-        # perform the attack: tell the target rig to take a hit
         target_rig.take_hit()
+        self.__trace_level += 1
 
-        # increase trace because launching an attack is risky and detectable
-        self.__trace_level = self.__trace_level + 1
-
-        # notifies when trace crosses the exposure threshold
-        # this informs the player/tests that future actions may be blocked
         if self.__trace_level > 5:
             print(self.__name, "is now EXPOSED! Actions are blocked until trace is reduced.")
 
-        # user-friendly report of attack outcome (broken vs still functional)
         if target_rig.is_broken():
             print(self.__name, "launched Data Spike at", target_rig.get_name(), "— Rig is now broken!")
         else:
             print(self.__name, "launched Data Spike at", target_rig.get_name(), "— Rig is still functional.")
 
-        # if the target broke, attempt extraction by consuming a Removable Drive
-        # extraction moves unsecured (unencrypted) assets from the broken rig to hacker inventory
         if target_rig.is_broken():
             if self.__rig.consume_removable_drive():
                 unsecured = target_rig.extract_unsecured_assets()
                 for asset in unsecured:
                     self.__inventory.append(asset)
-                # Prints a message showing how many assets were successfully extracted
                 print(self.__name, "extracted", str(len(unsecured)), "unsecured assets from", target_rig.get_name())
-            # If there are no removable drives available, extraction cannot happen
             else:
                 print(self.__name, "has no removable drive to extract assets from", target_rig.get_name())
 
-    # Description: Encrypts an asset found in the hacker’s inventory or rig storage
-    # if not exposed and equipped with a Security Chip.
-    # Parameters: asset – the asset object to be encrypted which must exist in inventory or rig storage.
-    # Returns: None. Prints messages indicating success or failure of encryption.
+    """
+    Description: Encrypts an asset found in inventory or rig storage if not exposed.
+    Parameters: asset – Asset object to encrypt.
+    Returns: None.
+    """
     def encrypt_asset(self, asset):
         if self.is_exposed():
             print(self.__name, "is exposed and cannot encrypt assets right now.")
             return
-        # Stops if the hacker does not have a Security Chip
         if not self.__has_security_chip:
             print(self.__name, "has no Security Chip to encrypt.")
             return
 
-        found = False  # Tracks if the asset was found and encrypted
+        found = False
 
-        # Searches the hacker's inventory for a matching asset
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == asset.get_name():
                 item.encrypt()
                 print("Encrypted asset:", str(item))
                 found = True
 
-        # If the hacker has a rig, this searches its storage for the asset
         if self.__rig is not None:
             for item in self.__rig.get_storage():
                 if check_asset(item) and item.get_name() == asset.get_name():
@@ -222,15 +224,14 @@ class Hacker:
                     print("Encrypted asset in rig storage:", item.get_name())
                     found = True
 
-        # If the asset was not found in either inventory or storage this notifies the user
         if not found:
             print("Asset not found in inventory or rig storage; cannot encrypt.")
 
-    # Description: Decrypts an asset found in the hacker’s inventory or rig storage
-    # if not exposed and equipped with a Security Chip.
-    # Parameters: asset – the asset object to be decrypted which must exist in inventory or rig storage.
-    # Returns: None. Prints messages indicating success or failure of decryption.
-
+    """
+    Description: Decrypts an asset found in inventory or rig storage if not exposed.
+    Parameters: asset – Asset object to decrypt.
+    Returns: None.
+    """
     def decrypt_asset(self, asset):
         if self.is_exposed():
             print(self.__name, "is exposed and cannot decrypt assets right now.")
@@ -239,16 +240,14 @@ class Hacker:
             print(self.__name, "has no Security Chip to decrypt.")
             return
 
-        found = False  # Tracks if we found the asset
+        found = False
 
-        # Searches inventory by name
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == asset.get_name():
                 item.decrypt()
                 print("Decrypted asset:", str(item))
                 found = True
 
-        # Searches rig storage if hacker has a rig
         if self.__rig is not None:
             for item in self.__rig.get_storage():
                 if check_asset(item) and item.get_name() == asset.get_name():
@@ -256,14 +255,14 @@ class Hacker:
                     print("Decrypted asset in rig storage:", item.get_name())
                     found = True
 
-        # If not found anywhere, it will print a message and lets the user know.
         if not found:
             print("Asset not found in inventory or rig storage; cannot decrypt.")
 
-    # Description: Upgrades the hacker’s rig by consuming a Hardware Patch asset
-    # from inventory if not exposed and a rig is available.
-    # Parameters: None. The method automatically searches inventory for a Hardware Patch asset.
-    # Returns: None. Prints messages describing success or failure of the rig upgrade.
+    """
+    Description: Upgrades the hacker’s rig using a Hardware Patch from inventory.
+    Parameters: None.
+    Returns: None.
+    """
     def upgrade_rig(self):
         if self.is_exposed():
             print(self.__name, "is exposed and cannot upgrade rigs right now.")
@@ -272,54 +271,47 @@ class Hacker:
             print(self.__name, "has no rig to upgrade.")
             return
 
-        # Finds a Hardware Patch Asset in inventory (searches by name)
         patch = None
         for item in self.__inventory:
             if check_asset(item) and item.get_name() == "Hardware Patch":
                 patch = item
-        # If no Hardware Patch is found it stops and notifies the user
+
         if patch is None:
             print("No Hardware Patch found in inventory.")
             return
 
-        # Takes the Hardware Patch out of the hacker’s inventory and applies it to upgrade the rig.
         self.__inventory.remove(patch)
         self.__rig.upgrade()
 
-    # Description: Stores a specific asset from the hacker’s inventory into the assigned rig’s storage if allowed.
-    # Parameters: asset – the asset object to be stored and must exist in the hacker’s inventory).
-    # Returns: None. Prints messages describing whether storage was successful or why it failed.
+    """
+    Description: Stores a specific asset from the hacker’s inventory into their rig storage.
+    Parameters: asset – Asset object to store.
+    Returns: None.
+    """
     def store_asset(self, asset):
-        # Blocks storing if the hacker is exposed
         if self.is_exposed():
             print(self.__name, "is exposed and cannot store assets right now.")
             return
-        # Stops if there is no rig assigned to the hacker
         if self.__rig is None:
             print(self.__name, "has no rig to store assets.")
             return
-        # Check if the asset actually exists in the hacker’s inventory
         if asset not in self.__inventory:
             print("Asset not found in inventory.")
             return
-
-        # Prevents encrypted assets from being stored until they are decrypted
         if check_asset(asset) and asset.is_encrypted():
             print("Cannot store encrypted asset until it is decrypted:", asset.get_name())
             return
 
-        # Attempts to add the asset to the rig’s storage
         if self.__rig.add_asset(asset):
-            # Removes the asset from inventory once successfully stored
             self.__inventory.remove(asset)
             print("Stored asset", asset.get_name(), "into rig storage.")
 
-    # Description: Stores all asset objects from the hacker’s inventory into the assigned rig’s storage,
-    # while also respecting the rig’s capacity limits.
-    # Parameters: None. Automatically checks all items in the hacker’s inventory.
-    # Returns: None. Prints messages for each asset stored or skipped.
+    """
+    Description: Stores all asset objects from the hacker’s inventory into the rig storage.
+    Parameters: None.
+    Returns: None.
+    """
     def store_all_assets(self):
-        # Stops if the hacker has no rig assigned
         if self.__rig is None:
             print(self.__name, "has no rig to store assets.")
             return
@@ -327,56 +319,58 @@ class Hacker:
             if check_asset(item):
                 self.store_asset(item)
 
-    # Description: Retrieves a specific asset from the rig’s storage and moves it back into the hacker’s inventory.
-    # Parameters: asset – the asset object to retrieve that must exist in the rig’s storage.
-    # Returns: None. Prints messages describing success or failure of the retrieval process.
+    """
+    Description: Retrieves a specific asset from the rig’s storage and moves it to inventory.
+    Parameters: asset – Asset object to retrieve.
+    Returns: None.
+    """
     def retrieve_asset(self, asset):
-        # Blocks retrieval if the hacker is currently exposed
         if self.is_exposed():
             print(self.__name, "is exposed and cannot retrieve assets right now.")
             return
-        # Stops if the hacker has no rig assigned
         if self.__rig is None:
             print(self.__name, "has no rig to retrieve assets from.")
             return
-        # Ensure the asset exists in the rig’s storage before retrieving
         if asset not in self.__rig.get_storage():
             print("Asset not found in rig storage.")
             return
-        # Moves the asset from rig storage back into the hacker’s inventory
         self.__inventory.append(asset)
         self.__rig.get_storage().remove(asset)
         print("Retrieved asset", asset.get_name(), "from rig storage.")
 
-    # Description: Retrieves all unencrypted assets from the rig’s storage and moves them into the hacker’s inventory.
-    # Parameters: None. Automatically checks all assets in the rig’s storage.
-    # Returns: None. Prints messages for each asset successfully retrieved.
+    """
+    Description: Retrieves all unencrypted assets from the rig’s storage into inventory.
+    Parameters: None.
+    Returns: None.
+    """
     def retrieve_all_from_rig(self):
         if self.__rig is None:
-            # Stops if the hacker has no rig assigned
             print(self.__name, "has no rig to retrieve assets from.")
             return
         for item in list(self.__rig.get_storage()):
             if check_asset(item) and not item.is_encrypted():
                 self.retrieve_asset(item)
 
-    # Description: Scans inventory for an asset by name, removes it from inventory and returns it if found.
-    # Parameters: asset_name – the string name of the asset to look for in the hacker’s inventory.
-    # Returns: The asset object if found and removed; otherwise None. Prints messages describing the result.
+    """
+    Description: Scans inventory for an asset by name, removes it if found, and returns it.
+    Parameters: asset_name – string, the asset’s name to search for.
+    Returns: The Asset object if found; otherwise None.
+    """
     def scan_inventory(self, asset_name):
         for item in list(self.__inventory):
             if check_asset(item) and item.get_name() == asset_name:
                 self.__inventory.remove(item)
                 print("Scanned and removed asset:", asset_name)
                 return item
-        # If loop finishes with no match, notify and return None
         print("No asset found by that name in inventory.")
         return None
 
-    # Description: Returns a readable string summary of the hacker’s current status
-    # including: name, rig, trace level, and inventory contents.
-    # Parameters: None. Automatically gathers data from the hacker’s attributes.
-    # Returns: A formatted string representing the hacker’s summary information.
+    """
+    Description: Returns a readable summary of the hacker’s current status,
+    including name, rig, trace level, and inventory contents.
+    Parameters: None.
+    Returns: String summary.
+    """
     def __str__(self):
         names = []
         for item in self.__inventory:
