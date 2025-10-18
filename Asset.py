@@ -16,15 +16,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
  that can be encrypted or decrypted, with a name and description.
  Also includes a helper function to verify whether an object is an Asset instance.
  """
-
 class Asset:
-
-    """
-    Description: Represents a digital asset that can be encrypted or decrypted,
-    with a name and description. Includes methods for encryption control and
-    safe access to asset information.
-    """
-
 
     """ 
     Description: Initialises a new Asset object.
