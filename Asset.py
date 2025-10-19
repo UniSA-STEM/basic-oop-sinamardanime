@@ -24,7 +24,7 @@ class Asset:
     Returns: None
     """
     def __init__(self, name, description):
-        self.__name = name  # stores asset name
+        self.name = name  # stores asset name
         self.__description = description  # stores asset description
         self.__encrypted = False  # ensures asset starts unencrypted
 
@@ -64,9 +64,26 @@ class Asset:
     Parameters: new_name – The new name for the asset.
     Returns: None
     """
-    def set_name(self, new_name):
-        self.__name = new_name  # updates asset name safely
 
+    def set_name(self, new_name):
+        """
+        Description: Updates the asset’s name with validation.
+        Parameters: new_name – The new name for the asset.
+        Returns: None. Assigns a default name if invalid.
+        """
+        # ensures that the provided name is a string
+        if isinstance(new_name, str):
+            # ensures that it is not blank or only spaces
+            if new_name.strip() != "":
+                self.__name = new_name  # updates asset name safely
+            else:
+                print("Error: Asset name cannot be empty. Defaulting to 'Unnamed_Asset'.")
+                self.__name = "Unnamed_Asset"
+        else:
+            print("Error: Invalid asset name type. Expected a string. Defaulting to 'Unnamed_Asset'.")
+            self.__name = "Unnamed_Asset"
+
+    name = property(get_name, set_name)  # property linking getter and setter for name
 
     """ 
     Description: Updates the asset’s description.

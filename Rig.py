@@ -46,7 +46,17 @@ class Rig:
     Returns: None.
     """
     def set_name(self, new_name):
-        self.__name = new_name  # Assign a new name to the rig
+        # Checks that the new name is a string (not a number or other type)
+        if isinstance(new_name, str):
+            # Ensures the string is not empty or made of only spaces
+            if new_name.strip() != "":
+                self.__name = new_name  # Assigns a valid name to the rig
+            else:
+                print("Error: Rig name cannot be empty. Defaulting to 'Unnamed_Rig'.")
+                self.__name = "Unnamed_Rig"  # Assigns default if blank
+        else:
+            print("Error: Invalid rig name type. Expected a string. Defaulting to 'Unnamed_Rig'.")
+            self.__name = "Unnamed_Rig"  # Assigns default if invalid type
 
     """
     Description: Updates the rig’s upgrade level.
