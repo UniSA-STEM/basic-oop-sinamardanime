@@ -28,7 +28,7 @@ class Rig:
     Returns: None.
     """
     def __init__(self, name):
-        self.__name = name
+        self.name = name
         self.__storage = [
             Asset("Data Spike", "Used in battles."),
             Asset("Data Spike", "Used in battles."),
@@ -58,16 +58,6 @@ class Rig:
             print("Error: Invalid rig name type. Expected a string. Defaulting to 'Unnamed_Rig'.")
             self.__name = "Unnamed_Rig"  # Assigns default if invalid type
 
-    """
-    Description: Updates the rig’s upgrade level.
-    Parameters: level – integer upgrade level.
-    Returns: None. Prints a warning if invalid.
-    """
-    def set_upgrade_level(self, level):
-        if level >= 0:
-            self.__upgrade_level = level  # Valid new upgrade level
-        else:
-            print("Invalid upgrade level; must be non-negative.")
 
     """
     Description: Updates the rig’s storage limit.
@@ -198,6 +188,9 @@ class Rig:
     """
     def get_name(self):
         return self.__name
+
+    # Connects the getter and setter as a property
+    name = property(get_name, set_name)
 
     """
     Description: Provides access to the list of items currently stored in the rig.
