@@ -25,7 +25,7 @@ from Asset import Asset, check_asset
 
 class Hacker:
     def __init__(self, name):
-        self.__name = name  # stores the hacker’s name
+        self.name = name  # stores the hacker’s name
         self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]  # ensures hacker starts with one CryptoToken
         self.__rig = None  # tracks assigned rig; starts with None
         self.__has_security_chip = True  # ensures hacker owns a Security Chip by default
@@ -64,6 +64,19 @@ class Hacker:
         else:
             print("Error: Invalid name type. Expected a string. Defaulting to 'Unknown_Hacker'.")
             self.__name = "Unknown_Hacker"
+
+    def get_name(self):
+        """
+        Description: Returns the hacker’s display name.
+        Parameters: None
+        Returns: str – the current name of the hacker.
+        """
+        return self.__name
+
+    # connects getter and setter as a property
+
+    name = property(get_name, set_name)
+
 
     """
     Description: Assigns a new rig to the hacker (or removes one if None is passed).
@@ -385,3 +398,5 @@ class Hacker:
                 names.append(str(item))  # adds string version
         rig_name = self.__rig.get_name() if self.__rig else "None"  # handles case of no rig
         return "Hacker: " + self.__name + " | Rig: " + rig_name + " | Trace Level: " + str(self.__trace_level) + " | Inventory: " + str(names)
+
+

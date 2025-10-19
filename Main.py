@@ -269,7 +269,7 @@ Returns: None. Prints inventory before and after acquisition.
 def test_rig_acquisition():
     print("\n--- TEST 7: Rig Acquisition ---")
 
-    hacker = Hacker("Buyer")
+    hacker = Hacker("buyer")
     rig = Rig("NewRig")
 
     print("Hacker Inventory before acquiring rig:", [str(i) for i in hacker.get_inventory()])
