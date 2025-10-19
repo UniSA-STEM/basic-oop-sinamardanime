@@ -65,12 +65,13 @@ class Hacker:
             print("Error: Invalid name type. Expected a string. Defaulting to 'Unknown_Hacker'.")
             self.__name = "Unknown_Hacker"
 
+    """
+           Description: Returns the hacker’s display name.
+           Parameters: None
+           Returns: str – the current name of the hacker.
+           """
     def get_name(self):
-        """
-        Description: Returns the hacker’s display name.
-        Parameters: None
-        Returns: str – the current name of the hacker.
-        """
+
         return self.__name
 
     # connects getter and setter as a property. I applied this because it was  mentioned in week 4's drop in session.

@@ -42,7 +42,7 @@ class Asset:
 
 
     """ 
-    Description: Marks this asset as decrypted (unencrypted).
+    Description: This function marks this asset as decrypted (unencrypted).
     Parameters: None
     Returns: None
     """
@@ -52,25 +52,21 @@ class Asset:
 
 
     """ 
-    Description: Returns the asset’s name.
+    Description: This function returns the asset’s name.
     Parameters: None
     Returns: str – The name of the asset.
     """
     def get_name(self):
         return self.__name  # returns stored asset name
 
-    """ 
-    Description: Updates the asset’s name.
-    Parameters: new_name – The new name for the asset.
-    Returns: None
     """
-
-    def set_name(self, new_name):
-        """
         Description: Updates the asset’s name with validation.
         Parameters: new_name – The new name for the asset.
         Returns: None. Assigns a default name if invalid.
         """
+
+    def set_name(self, new_name):
+
         # ensures that the provided name is a string
         if isinstance(new_name, str):
             # ensures that it is not blank or only spaces
