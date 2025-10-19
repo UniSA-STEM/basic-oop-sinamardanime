@@ -48,7 +48,7 @@ class Hacker:
         return self.__rig  # returns the current rig if assigned
 
     """
-    Description: Updates the hacker's name.
+    Description: This function updates the hacker's name. It first checks for if it is a string then it executes. 
     Parameters: new_name – string, the new name for the hacker.
     Returns: None.
     """
@@ -73,8 +73,7 @@ class Hacker:
         """
         return self.__name
 
-    # connects getter and setter as a property
-
+    # connects getter and setter as a property. I applied this because it was  mentioned in week 4's drop in session.
     name = property(get_name, set_name)
 
 
