@@ -20,7 +20,7 @@ class Asset:
 
     """ 
     Description: Initialises a new Asset object.
-    Parameters: name – string name of the asset, description – string explanation of its purpose.
+    Parameters: name - only the string name of the asset, description – string explanation of its purpose.
     Returns: None
     """
     def __init__(self, name, description):
@@ -60,7 +60,7 @@ class Asset:
         return self.__name  # returns stored asset name
 
     """
-        Description: Updates the asset’s name with validation.
+        Description: This updates the asset’s name with validation using properties to easily retrieve it.
         Parameters: new_name – The new name for the asset.
         Returns: None. Assigns a default name if invalid.
         """
@@ -82,7 +82,7 @@ class Asset:
     name = property(get_name, set_name)  # property linking getter and setter for name
 
     """ 
-    Description: Updates the asset’s description.
+    Description: The function updates the asset’s description.
     Parameters: new_description – The new description for the asset.
     Returns: None
     """

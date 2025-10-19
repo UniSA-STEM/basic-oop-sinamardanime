@@ -49,7 +49,7 @@ class Hacker:
 
     """
     Description: This function updates the hacker's name. It first checks for if it is a string then it executes. 
-    Parameters: new_name – string, the new name for the hacker.
+    Parameters: new_name as a string, the new name for the hacker.
     Returns: None.
     """
     def set_name(self, new_name):
@@ -68,7 +68,7 @@ class Hacker:
     """
            Description: Returns the hacker’s display name.
            Parameters: None
-           Returns: str – the current name of the hacker.
+           Returns: a string displaying the current name of the hacker.
            """
     def get_name(self):
 
@@ -80,7 +80,7 @@ class Hacker:
 
     """
     Description: Assigns a new rig to the hacker (or removes one if None is passed).
-    Parameters: new_rig – Rig object or None.
+    Parameters: new_rig -  the rig object or None.
     Returns: None. Prints warning if invalid type.
     """
     def set_rig(self, new_rig):
@@ -120,7 +120,7 @@ class Hacker:
     """
     Description: Lets the hacker buy and activate a rig using a CryptoToken.
     Validates the rig, checks inventory for a CryptoToken, removes it, and assigns the rig.
-    Parameters: rig – Rig object to acquire.
+    Parameters: rig- The rig object to acquire.
     Returns: None. Prints result.
     """
     def acquire_rig(self, rig):
@@ -178,7 +178,7 @@ class Hacker:
 
     """
     Description: Launches a Data Spike attack from the hacker’s rig at a target rig.
-    Parameters: target_rig – Rig object to attack.
+    Parameters: target_rig- Rig object to attack.
     Returns: None. Prints battle results.
     """
     def launch_data_spike(self, target_rig):
