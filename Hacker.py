@@ -53,7 +53,17 @@ class Hacker:
     Returns: None.
     """
     def set_name(self, new_name):
-        self.__name = new_name  # updates the hacker’s display name
+        # checks if new_name is a string (for example, it should not be an integer)
+        if isinstance(new_name, str):
+            # ensures the name is not empty or just spaces
+            if new_name != "":
+                self.__name = new_name  # updates the hacker’s display name
+            else:
+                print("Error: Name cannot be empty. Defaulting to 'Unknown_Hacker'.")
+                self.__name = "Unknown_Hacker"
+        else:
+            print("Error: Invalid name type. Expected a string. Defaulting to 'Unknown_Hacker'.")
+            self.__name = "Unknown_Hacker"
 
     """
     Description: Assigns a new rig to the hacker (or removes one if None is passed).
