@@ -278,6 +278,52 @@ def test_rig_acquisition():
 
 
 # -------------------------------------------------------
+# TEST 8 – Invalid Name Validation
+# -------------------------------------------------------
+"""
+Description: Tests name validation for Rig, Hacker, and Asset classes
+when invalid inputs (e.g., integers or empty strings) are provided. this is to check if the property checks are working.
+Parameters: None.
+Returns: None. Prints validation messages and resulting names.
+"""
+def test_invalid_name_validation():
+    print("\n--- TEST 8: Invalid Name Validation ---")
+
+    # 1. Invalid name for Rig (integer)
+    print("\n[Testing Rig invalid name (integer)]")
+    bad_rig = Rig(123)  # should print error and set to 'Unnamed_Rig'
+    print("Rig name after validation:", bad_rig.name)
+
+    # 2. Empty string for Rig
+    print("\n[Testing Rig empty string name]")
+    empty_rig = Rig("")  # should print error and set to 'Unnamed_Rig'
+    print("Rig name after validation:", empty_rig.name)
+
+    # 3. Invalid name for Hacker (integer)
+    print("\n[Testing Hacker invalid name (integer)]")
+    bad_hacker = Hacker(999)  # should print error and set to 'Unknown_Hacker'
+    print("Hacker name after validation:", bad_hacker.name)
+
+    # 4. Empty string for Hacker
+    print("\n[Testing Hacker empty string name]")
+    empty_hacker = Hacker("")  # should print error and set to 'Unknown_Hacker'
+    print("Hacker name after validation:", empty_hacker.name)
+
+    # 5. Invalid name for Asset (integer)
+    print("\n[Testing Asset invalid name (integer)]")
+    bad_asset = Asset(42, "Test asset")
+    print("Asset name after validation:", bad_asset.name)
+
+    # 6. Empty string for Asset
+    print("\n[Testing Asset empty string name]")
+    empty_asset = Asset("", "Empty name test")
+    print("Asset name after validation:", empty_asset.name)
+
+
+
+
+
+# -------------------------------------------------------
 # MAIN FUNCTION
 # -------------------------------------------------------
 """
@@ -293,7 +339,7 @@ def main():
     test_trace_management()
     test_rig_condition_changes()
     test_rig_acquisition()
-
+    test_invalid_name_validation()
 
 """
 Description: Ensures all tests run only when the script is executed directly.
