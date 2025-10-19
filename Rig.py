@@ -13,20 +13,14 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 from Asset import Asset, check_asset
 
-
-class Rig:
-    """
+"""
     Description: Represents a hacker’s rig device which stores assets, handles upgrades,
     damage, repairs, and extraction operations.
     Parameters: name – the name of the rig instance.
     Returns: None. Initialises default storage, upgrade level, and damage state.
     """
+class Rig:
 
-    """
-    Description: Initialises the rig with default storage, upgrade level, and damage state.
-    Parameters: name – string, name of the rig instance.
-    Returns: None.
-    """
     def __init__(self, name):
         self.name = name
         self.__storage = [
@@ -42,7 +36,7 @@ class Rig:
 
     """
     Description: Updates the rig’s name.
-    Parameters: new_name – new name for the rig.
+    Parameters: new_name – the new name for the rig.
     Returns: None.
     """
     def set_name(self, new_name):
@@ -72,7 +66,7 @@ class Rig:
 
     """
     Description: Adds an asset to the rig’s storage if space is available.
-    Parameters: asset – Asset object to be added.
+    Parameters: asset – the Asset object to be added.
     Returns: True if successfully added, False if storage is full.
     """
     def add_asset(self, asset):

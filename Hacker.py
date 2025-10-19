@@ -178,7 +178,7 @@ class Hacker:
 
     """
     Description: Launches a Data Spike attack from the hacker’s rig at a target rig.
-    Parameters: target_rig- Rig object to attack.
+    Parameters: target_rig- the rig object to attack.
     Returns: None. Prints battle results.
     """
     def launch_data_spike(self, target_rig):
@@ -218,7 +218,7 @@ class Hacker:
 
     """
     Description: Encrypts an asset found in inventory or rig storage if not exposed.
-    Parameters: asset – Asset object to encrypt.
+    Parameters: asset- the Asset object to encrypt.
     Returns: None.
     """
     def encrypt_asset(self, asset):
@@ -248,7 +248,7 @@ class Hacker:
 
     """
     Description: Decrypts an asset found in inventory or rig storage if not exposed.
-    Parameters: asset – Asset object to decrypt.
+    Parameters: asset- the Asset object to decrypt.
     Returns: None.
     """
     def decrypt_asset(self, asset):
@@ -303,7 +303,7 @@ class Hacker:
 
     """
     Description: Stores a specific asset from the hacker’s inventory into their rig storage.
-    Parameters: asset – Asset object to store.
+    Parameters: asset- the Asset object to store.
     Returns: None.
     """
     def store_asset(self, asset):
@@ -339,7 +339,7 @@ class Hacker:
 
     """
     Description: Retrieves a specific asset from the rig’s storage and moves it to inventory.
-    Parameters: asset – Asset object to retrieve.
+    Parameters: asset- the Asset object to retrieve.
     Returns: None.
     """
     def retrieve_asset(self, asset):
@@ -371,7 +371,7 @@ class Hacker:
 
     """
     Description: Scans inventory for an asset by name, removes it if found, and returns it.
-    Parameters: asset_name – string, the asset’s name to search for.
+    Parameters: asset_name which is a string, the asset’s name to search for.
     Returns: The Asset object if found; otherwise None.
     """
     def scan_inventory(self, asset_name):
