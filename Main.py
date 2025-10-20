@@ -1,6 +1,6 @@
 """
 File: main.py
-Description: This program tests the 'Into the Grid' system by creating hackers, rigs and assets.
+Description: This program tests the hacker system by creating hackers, rigs and assets.
 It runs different parts of the simulation that show how battles, upgrades, encryption and trace
 levels work. The tests are grouped into separate sections to clearly show each feature and make
 the program easier to check.

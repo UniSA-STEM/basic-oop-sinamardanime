@@ -1,7 +1,7 @@
 """
 File: Hacker.py
 Description: This file defines the Hacker class used in the 'Into the Grid' system. It represents
-a hacker who can use rigs, manage assets, and perform actions like attacking, upgrading,
+a hacker who can use rigs, manage assets, and perform basic actions like attacking, upgrading,
 encrypting, and repairing. The class controls how hackers interact with rigs and assets
 through their inventory and trace system.
 
