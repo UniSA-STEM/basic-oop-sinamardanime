@@ -81,7 +81,7 @@ class Hacker:
 
     """
     Description: Assigns a new rig to the hacker (or removes one if None is passed).
-    Parameters: new_rig -  the rig object or None.
+    Parameters: new_rig- which is the rig object or None.
     Returns: None. Prints warning if invalid type.
     """
     def set_rig(self, new_rig):
@@ -93,7 +93,7 @@ class Hacker:
     """
     Description: Returns the hacker’s current trace level.
     Parameters: None.
-    Returns: Integer – the hacker’s trace level.
+    Returns: Integer- the hacker’s trace level.
     """
     def get_trace_level(self):
         return self.__trace_level  # returns hacker’s trace level value
@@ -109,7 +109,7 @@ class Hacker:
 
     """
     Description: Reduces the hacker’s trace level by a specific amount, never going below 0.
-    Parameters: amount – integer amount to reduce.
+    Parameters: amount which is referred as the integer amount to reduce.
     Returns: None. Prints updated trace level.
     """
     def reduce_trace(self, amount):

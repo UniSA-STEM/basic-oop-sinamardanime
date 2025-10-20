@@ -22,7 +22,7 @@ from Hacker import Hacker
 Description: Runs a scenario test that simulates a battle using Data Spikes
 and attempts asset extraction from a broken rig.
 Parameters: None.
-Returns: None. Prints setup, storage before/after attack, and a final hacker summary.
+Returns: None. Prints the storage before and after attack, and a final hacker summary.
 """
 def test_battle_and_extraction():
     print("\n--- TEST 1: Battle and Extraction ---")
