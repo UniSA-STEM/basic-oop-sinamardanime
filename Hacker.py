@@ -8,6 +8,7 @@ through their inventory and trace system.
 Author: Sina Mardani Mehrabad
 ID: Marsyl27
 Username: sinamardanime
+Github repository: https://github.com/UniSA-STEM/basic-oop-sinamardanime.git
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
 from Rig import Rig
