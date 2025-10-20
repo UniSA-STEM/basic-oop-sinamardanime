@@ -21,7 +21,7 @@ class Asset:
 
     """ 
     Description: Initialises a new Asset object.
-    Parameters: name - only the string name of the asset, description – string explanation of its purpose.
+    Parameters: name-  only the string name of the asset, description – string explanation of its purpose.
     Returns: None
     """
     def __init__(self, name, description):
