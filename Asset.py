@@ -1,6 +1,6 @@
 """
 File: Asset.py
-Description: This file defines the Asset class used in the 'Into the Grid' system. It represents digital
+Description: This file defines the Asset class used in the system. It represents digital
 items that can be encrypted, decrypted, stored or transferred between hackers and rigs. Each
 asset has a name, description and encryption state, and is used in actions such as upgrades,
 battles or data protection.
