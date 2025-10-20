@@ -6,7 +6,7 @@ basic items like Data Spikes and a Removable Drive and supports actions such as 
 extracting assets, and generating new ones.
 
 Author: Sina Mardani Mehrabad
-ID: Marsyl127
+ID: Marsy127
 Username: sinamardanime
 Github repository: https://github.com/UniSA-STEM/basic-oop-sinamardanime.git
 This is my own work as defined by the University's Academic Misconduct Policy.

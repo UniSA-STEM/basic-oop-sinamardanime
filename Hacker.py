@@ -6,7 +6,7 @@ encrypting, and repairing. The class controls how hackers interact with rigs and
 through their inventory and trace system.
 
 Author: Sina Mardani Mehrabad
-ID: Marsyl27
+ID: Marsy127
 Username: sinamardanime
 Github repository: https://github.com/UniSA-STEM/basic-oop-sinamardanime.git
 This is my own work as defined by the University's Academic Misconduct Policy.

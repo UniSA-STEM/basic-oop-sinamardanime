@@ -6,7 +6,7 @@ asset has a name, description and encryption state, and is used in actions such 
 battles or data protection.
 
 Author: Sina Mardani Mehrabad
-ID: Marsyl127
+ID: Marsy127
 Username: sinamardanime
 Github repository: https://github.com/UniSA-STEM/basic-oop-sinamardanime.git
 This is my own work as defined by the University's Academic Misconduct Policy.
